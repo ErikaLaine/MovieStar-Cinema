@@ -1,190 +1,62 @@
-/* ===== PERUSASETUKSET ===== */
-* {
-  box-sizing: border-box;
-}
-
+/* ===== BODY & PERUS ===== */
 body {
-  margin: 0;
-  background-color: #111;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #111;
+    color: white;
 }
 
-main {
-  padding: 20px;
+/* ===== NAVBAR ===== */
+.navbar {
+    background-color: #111 !important;
+}
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: white !important;
+}
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+    color: #e50914 !important;
 }
 
-/* ===== HEADER & NAV ===== */
-header {
-  background: #000;
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* ===== CARD / LIPUT ===== */
+.card {
+    background-color: #1f1f1f !important;
+    color: white !important;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-header h1 {
-  margin: 0;
-  font-family: 'Georgia', serif;
-  font-size: 1.5rem;
-  color: white;
-  position: relative;
+.card .btn-primary {
+    background-color: #e50914 !important;
+    border: none !important;
+    color: white !important;
 }
-
-header h1::after {
-  content: "★";
-  color: #e50914;
-  font-weight: bold;
-  margin-left: 6px;
-  font-size: 1.3rem;
-  position: relative;
-  top: 2px;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-nav a:hover {
-  color: #e50914;
-}
-
-/* ===== LIPUT ===== */
-.tickets {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-}
-
-.ticket-card {
-  background: #1f1f1f;
-  width: 220px;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  transition: transform 0.2s;
-  color: white;
-}
-
-.ticket-card:hover {
-  transform: scale(1.03);
-}
-
-.ticket-card img {
-  width: 100%;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.ticket-card h3 {
-  margin: 0 0 5px 0;
-}
-
-.ticket-card p {
-  margin: 5px 0;
-}
-
-.ticket-card .price {
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.ticket-card button {
-  background: #e50914;
-  color: white;
-  border: none;
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.ticket-card button:hover {
-  background: #b20710;
-}
-
-/* ===== PROFILE ===== */
-.profile-card {
-  display: flex;
-  gap: 20px;
-  background: #1f1f1f;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 600px;
-  margin: 40px auto;
-  align-items: center;
-  color: white;
-}
-
-.profile-card .profile-img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #e50914;
-}
-
-.profile-card .profile-info h2 {
-  margin: 0 0 10px 0;
-}
-
-.profile-card .profile-info p {
-  margin: 5px 0;
-}
-
-.profile-card button {
-  background: #e50914;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin-top: 10px;
-  width: 100%;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-
-.profile-card button:hover {
-  background: #b20710;
+.card .btn-primary:hover {
+    background-color: #b20710 !important;
 }
 
 /* ===== FOOTER ===== */
 footer {
-  background: #000;
-  padding: 20px;
-  text-align: center;
-  color: #ccc;
-  font-size: 0.9rem;
+    background-color: #000;
+    color: #ccc;
+    padding: 20px;
 }
 
-/* ===== MOBIILI ===== */
+/* ===== RESPONSIIVISUUS ===== */
 @media (max-width: 768px) {
-  /* Liput */
-  .tickets {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .ticket-card {
-    width: 90%;
-  }
-
-  /* Profiili */
-  .profile-card {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profile-card .profile-info button {
-    width: 90%;
-    margin: 5px auto 0 auto;
-  }
+    .ticket-card {
+        width: 90%;
+        margin: auto;
+    }
 }
+body, .container {
+    background-color: #111 !important;
+    color: white !important;
+}
+
+.card {
+    background-color: #1f1f1f !important;
+    color: white !important;
+}
+
