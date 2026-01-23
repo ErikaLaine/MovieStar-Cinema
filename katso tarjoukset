@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width='device-width', initial-scale=1.0">
+    <title>MovieStar - Cinema</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+    <header>
+        <nav class ="navbar">
+            <h1 class="logo">MovieStar Cinema<span>★</span></h1>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Etusivu</a></li>
+                <li><a href="naytosajat.html">Näytösajat</a></li>
+                <li><a href="liput.html">Liput</a></li>
+                <li><a href="haku.html">Hae</a></li>
+            </ul>
+
+            <div class="nav-buttons">
+                <a href="profiili.html" class="btn">Profiili</a>
+                <a href="liput.html" class="btn">Osta liput</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page">
+        <h2 class="offer-grid">Tarjoukset</h2>
+
+        <section class="offer-grid">
+            <article class="offer-card">
+                <h3>Keskiviikon leffailta</h3>
+                <p>-15% 2D-lipuista koko päivän.</p>
+                <p class="offer-price">Alk. 9,80 €</p>
+            </article>
+
+            <article class="offer-card">
+                <h3>Opiskelija- ja Eläkeläisetu</h3>
+                <p>-20% arkipäivisin klo 11-15 opisleija- ja eläkeläiskortilla.</p>
+                <p class="offer-price">-20%</p>
+            </article>
+
+            <article class="offer-card">
+                <h3>Kaveritarjous</h3>
+                <p>Sinä + kaveri + herkut ja juomat.</p>
+                <p class="offer-price">18,90 €</p>
+            </article>
+
+            <article class="offer-card">
+            <h3>Tee oma combo</h3>
+            <p>Liput + suolainen/makea snack + valitsemasi juoma</p>
+            <p class="offfer-price">14,50 €</p>
+            </article>
+        </section>
+    </main>
+
+    
+
+    
+</body>
+</html>
