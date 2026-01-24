@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieStar Cinema - Muut palvelut </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+   <header>
+    <nav class="navbar">
+        <h1 class="logo">MovieStar Cinema<span>★</span></h1>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Etusivu</a></li>
+            <li><a href="naytosajat.html">Näytösajat</a></li>
+            <li><a href="liput.html">Liput</a></li>
+            <li><a href="haku.html">Hae</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <a href="profiili.html" class="btn">Profiili</a>
+            <a href="liput.html" class="btn">Osta liput</a>
+        </div>
+    </nav>
+   </header> 
+
+   <manin class="page">
+    <h2 class="page-title">Muut palvelut</h2>
+
+    <section class="service-grid">
+        <article class="service-card">
+            <h3>Herkku baari</h3>
+            <p>Popcorn, nachot, loaded fries, makeiset, jäähilejuomat ja limpparit.</p>
+            <p>Kaikkea kaikille!</p>
+        </article>
+
+        <article class="service-card">
+            <h3>Tapahtumat</h3>
+            <p>Maratonit joka kuukauden viimeisellä viikolla.</p>
+            <p>Teemaillat elokuvakerhon kerroilla.</p>
+            <p>Ennakkonäytökset IMAX-salissa.</p>
+        </article>
+
+        <article class="service-card">
+            <h3>Yksityisnäytös</h3>
+            <p>Varaa koko sali seurueellesi tai yrityksellesi.</p>
+            <p>Varattavissa salit 1-4.</p>
+        </article>
+
+        <article class="service-card">
+            <h3>Lahjakortit</h3>
+            <p>Voit ostaa lahjakortit päätiskiltä sisäänkäynnin vierestä.</p>
+            <p>Lahjakorteilla ei voi ostaa k-18 elokuviin lippuja.</p>
+        </article>
+    </section>
+   </manin>
+
+    <footer> 
+        <section>
+            <h4>Info</h4>
+            <p>Edut ja kampanjat</p>
+            <p>Ikärajar</p>
+            <p>Teatterit</p>
+            <p>Aukioloajat</p>
+        </section>
+
+        <section>
+            <h4>Yritys</h4>
+            <p>Tietoa meistä</p>
+            <p>Työpaikat</p>
+            <p>Yhteiskuntavastuu</p>
+        </section>
+
+        <section>
+            <h4>Asiakaspalvelu</h4>
+            <p>asiakaspalvelu@moviestar.fi</p>
+            <p>Ota yhteyttä</p>
+        </section>
+    </footer>
+</body>
+</html>
