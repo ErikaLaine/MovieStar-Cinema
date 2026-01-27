@@ -185,8 +185,9 @@ main {
 }
 
 /* =====================================================
-   TARJOUKSET & MUUT PALVELUT - SIVUT
+   TARJOUKSET & MUUT PALVELUT
    ===================================================== */
+
 .page {
   max-width: 1100px;
   margin: 0 auto;
@@ -198,7 +199,8 @@ main {
   margin: 10px 0 18px;
 }
 
-/* tarjoukset */
+/* ---------- TARJOUKSET ---------- */
+
 .offer-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -218,16 +220,19 @@ main {
 }
 
 .offer-card p {
-  line-height: 1.5;
   opacity: 0.9;
+  line-height: 1.5;
 }
 
 .offer-price {
   margin-top: 12px;
   font-weight: 800;
+  font-size: 1.1rem;
+  opacity: 1;
 }
 
-/* muut palvelut */
+/* ---------- MUUT PALVELUT ---------- */
+
 .service-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -243,12 +248,26 @@ main {
 
 .service-card h3 {
   margin-bottom: 8px;
+  font-size: 1.25rem;
 }
 
 .service-card p {
-  line-height: 1.5;
   opacity: 0.9;
+  line-height: 1.5;
 }
+
+.service-note {
+  margin-top: 12px;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.service-list {
+  margin-top: 6px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
 
 /* =====================================================
    FOOTER
