@@ -69,6 +69,12 @@ header {
 /* =====================================================
    HERO (etusivu)
    ===================================================== */
+
+   @media (max-width: 700px) {
+    .hero {
+        height: 400px; /* korkeutta voi säätää tarvittaessa */
+    }
+    
 .hero {
   position: relative;
   height: 350px;
