@@ -310,26 +310,26 @@ footer h4 {
    ========================================== */
 @media (max-width: 700px) {
     .hero {
-        height: 400px; /* korkeutta voi säätää tarvittaessa */
+        height: 400px; 
     }
 
     .hero-content {
-        bottom: 15px;         /* vähemmän tyhjää tilaa alareunassa */
-        left: 15px;           /* pienempi marginaali vasemmalla */
-        right: 15px;          /* estää tekstin menemisen reunasta ulos */
-        padding: 10px 15px;   /* sisäistä tilaa pienennetään */
+        bottom: 15px;         
+        left: 15px;           
+        right: 15px;          
+        padding: 10px 15px;   
     }
 
     .hero-content h2 {
-        font-size: 1.5rem;    /* pienempi otsikko mobiilissa */
+        font-size: 1.5rem;    
     }
 
     .hero-content p {
-        font-size: 1rem;      /* pienempi leipäteksti */
+        font-size: 1rem;      
     }
 
     .hero-content .btn {
-        padding: 0.4rem 0.8rem;  /* pienempi nappi */
+        padding: 0.4rem 0.8rem;  
         font-size: 0.9rem;
     }
 }
