@@ -67,7 +67,7 @@ header {
 }
 
 /* =====================================================
-   HERO
+   HERO (etusivu)
    ===================================================== */
 .hero {
   position: relative;
@@ -102,20 +102,26 @@ header {
 }
 
 /* =====================================================
-   MAIN LAYOUT (etusivu)
+   MAIN – OLETUS (kaikki muut sivut)
    ===================================================== */
 main {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 40px auto;
   padding: 0 20px;
+}
 
+/* =====================================================
+   ETUSIVU LAYOUT (VAIN ETUSIVU!)
+   ===================================================== */
+.home main {
+  max-width: 1200px;
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 32px;
 }
 
 /* =====================================================
-   MOVIES
+   MOVIES (etusivu)
    ===================================================== */
 .movies {
   margin-bottom: 32px;
@@ -140,7 +146,7 @@ main {
 }
 
 /* =====================================================
-   TARJOUKSET (CTA)
+   KATSO TARJOUKSET – CTA (etusivu)
    ===================================================== */
 .sales-link {
   text-decoration: none;
@@ -160,7 +166,7 @@ main {
 }
 
 /* =====================================================
-   SIDEBAR
+   SIDEBAR (etusivu)
    ===================================================== */
 .sidebar {
   background: rgba(255, 255, 255, 0.05);
@@ -185,9 +191,8 @@ main {
 }
 
 /* =====================================================
-   TARJOUKSET & MUUT PALVELUT
+   TARJOUKSET & MUUT PALVELUT (omat sivut)
    ===================================================== */
-
 .page {
   max-width: 1100px;
   margin: 0 auto;
@@ -199,8 +204,7 @@ main {
   margin: 10px 0 18px;
 }
 
-/* ---------- TARJOUKSET ---------- */
-
+/* tarjoukset */
 .offer-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -228,11 +232,9 @@ main {
   margin-top: 12px;
   font-weight: 800;
   font-size: 1.1rem;
-  opacity: 1;
 }
 
-/* ---------- MUUT PALVELUT ---------- */
-
+/* muut palvelut */
 .service-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -259,7 +261,6 @@ main {
 .service-note {
   margin-top: 12px;
   font-weight: 700;
-  opacity: 1;
 }
 
 .service-list {
@@ -268,7 +269,6 @@ main {
   line-height: 1.6;
 }
 
-
 /* =====================================================
    FOOTER
    ===================================================== */
@@ -276,7 +276,6 @@ footer {
   margin-top: 60px;
   padding: 40px 20px;
   background: #111;
-
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
@@ -290,7 +289,7 @@ footer h4 {
    RESPONSIVE
    ===================================================== */
 @media (max-width: 900px) {
-  main {
+  .home main {
     grid-template-columns: 1fr;
   }
 
