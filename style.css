@@ -121,6 +121,11 @@ header {
     padding: 18px;
    }
 
+   .offer-card h3 {
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+   }
+
    .offer-card p {
     opacity: 0.9;
     line-height: 1.5;
