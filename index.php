@@ -24,8 +24,8 @@
             </ul>
 
             <div class="nav-buttons">
-                <a href="profiili.html" class="btn"> Profiili</a>
-                <a href="liput.html" class="btn"> Osta liput</a>
+                <a href="profiili.php" class="btn"> Profiili</a>
+                <a href="liput.php" class="btn"> Osta liput</a>
 
             </div>
         </nav>
