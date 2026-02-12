@@ -1,3 +1,28 @@
+<?php
+// tietokantayhteys
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "vieraskirja";
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) die("Yhteys epäonnistui: " . $conn->connect_error);
+
+// Jos lomake lähetetty, tallenna viesti
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
+
+    $stmt = $conn->prepare("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $name, $email, $message);
+    $stmt->execute();
+    $stmt->close();
+}
+
+// Hae viestit
+$result = $conn->query("SELECT * FROM messages ORDER BY created_at DESC");
+?>
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -9,9 +34,7 @@
 
 <h2>Ota yhteyttä asiakaspalveluun</h2>
 
-<p>Täytä alla oleva lomake ja vastaamme sinulle mahdollisimman pian.</p>
-
-<form action="laheta.php" method="post">
+<form action="" method="post">
     <label>Nimi</label><br>
     <input type="text" name="name" required><br><br>
 
@@ -24,5 +47,23 @@
     <button type="submit">Lähetä</button>
 </form>
 
+<h2>Vieraskirja</h2>
+
+<?php
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo "<div class='viesti'>";
+        echo "<strong>" . htmlspecialchars($row['name']) . "</strong> (" . $row['created_at'] . ")<br>";
+        echo nl2br(htmlspecialchars($row['message']));
+        echo "</div><hr>";
+    }
+} else {
+    echo "<p>Ei vielä viestejä.</p>";
+}
+
+$conn->close();
+?>
+
 </body>
 </html>
+
