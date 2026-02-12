@@ -135,6 +135,7 @@
             <h4>Asiakaspalvelu</h4>
             <p>asiakaspalvelu@moviestar.fi</p>
             <p><a href="ota-yhteytta.php">Ota yhteyttä</a></p>
+            <p><a href="uusi_kayttaja.php">Luo Profiili</a></p>
 
 
         </section>
