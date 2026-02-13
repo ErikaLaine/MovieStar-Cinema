@@ -1,19 +1,19 @@
 <?php
-// ====== TIETOKANTA-ASETUKSET (MUOKKAA NÄMÄ) ======
+
 $servername = "localhost";
 $username   = "amk1013231";
 $password   = "IxNzc6lJ";
 $dbname     = "wp_amk1013231";
 
-// ====== YHDISTÄ TIETOKANTAAN ======
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 $conn->set_charset("utf8mb4");
 
 if ($conn->connect_error) {
-    die("Tietokantayhteys epäonnistui: " . $conn->connect_error);
+    die("Tietokantayhteys epaonnistui: " . $conn->connect_error);
 }
 
-// ====== LOMAKKEEN KÄSITTELY (TALLENNUS) ======
+
 $success = "";
 $error = "";
 
@@ -24,25 +24,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $message = trim($_POST["message"] ?? "");
 
     if ($name === "" || $email === "" || $message === "") {
-        $error = "Täytä kaikki kentät.";
+        $error = "Tayta kaikki kentat.";
     } else {
-        // Turvallisempi INSERT prepared statementilla
+        
         $stmt = $conn->prepare("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)");
         if ($stmt) {
             $stmt->bind_param("sss", $name, $email, $message);
             if ($stmt->execute()) {
                 $success = "Kiitos! Viestisi tallennettiin.";
             } else {
-                $error = "Tallennus epäonnistui: " . $stmt->error;
+                $error = "Tallennus epaonnistui: " . $stmt->error;
             }
             $stmt->close();
         } else {
-            $error = "Tallennus epäonnistui: " . $conn->error;
+            $error = "Tallennus epaonnistui: " . $conn->error;
         }
     }
 }
 
-// ====== HAETAAN VIESTIT LISTAUSTA VARTEN ======
+
 $result = $conn->query("SELECT id, name, email, message, created_at FROM messages ORDER BY created_at DESC");
 ?>
 
@@ -52,10 +52,10 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ota yhteyttä</title>
+    <title>Ota yhteytta</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="home">
+<body>
 
 <header>
     <nav class="navbar">
@@ -63,7 +63,7 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
 
         <ul class="nav-links">
             <li><a href="index.html">Etusivu</a></li>
-            <li><a href="#">Näytösajat</a></li>
+            <li><a href="#">Naytosajat</a></li>
             <li><a href="liput.html">Liput</a></li>
             <li><a href="#">Hae</a></li>
         </ul>
@@ -76,8 +76,8 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
 </header>
 
 <main style="max-width: 900px; margin: 40px auto; padding: 0 16px;">
-    <h2>Ota yhteyttä</h2>
-    <p>Jätä viesti alle. Viestit tallennetaan tietokantaan ja näytetään tällä sivulla.</p>
+    <h2>Ota yhteytta</h2>
+    <p>Jata viesti alle. Viestit tallennetaan tietokantaan ja naytetaan talla sivulla.</p>
 
     <?php if ($success !== ""): ?>
         <div style="border:1px solid #4caf50; padding:10px; margin:15px 0;">
@@ -95,7 +95,7 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
         <label>Nimi:</label><br>
         <input type="text" name="name" required style="width:100%; padding:10px; margin:8px 0;"><br>
 
-        <label>Sähköposti:</label><br>
+        <label>Sahkoposti:</label><br>
         <input type="email" name="email" required style="width:100%; padding:10px; margin:8px 0;"><br>
 
         <label>Viesti:</label><br>
@@ -106,7 +106,7 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
 
     <hr style="margin: 30px 0;">
 
-    <h3>Lähetetyt viestit</h3>
+    <h3>Lahetetyt viestit</h3>
 
     <?php if ($result && $result->num_rows > 0): ?>
         <?php while ($row = $result->fetch_assoc()): ?>
@@ -121,7 +121,7 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
             </div>
         <?php endwhile; ?>
     <?php else: ?>
-        <p>Ei vielä viestejä.</p>
+        <p>Ei viela viesteja.</p>
     <?php endif; ?>
 
 </main>
@@ -130,7 +130,7 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
     <section>
         <h4>Info</h4>
         <p>Edut ja kampanjat</p>
-        <p>Ikärajat</p>
+        <p>Ikarajat</p>
         <p>Teatterit</p>
         <p>Aukioloajat</p>
     </section>
@@ -138,14 +138,14 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
     <section>
         <h4>Yritys</h4>
         <p>Tietoa meistä</p>
-        <p>Työpaikat</p>
+        <p>Tyopaikat</p>
         <p>Yhteiskuntavastuu</p>
     </section>
 
     <section>
         <h4>Asiakaspalvelu</h4>
         <p>asiakaspalvelu@moviestar.fi</p>
-        <p><a href="ota-yhteytta.php">Ota yhteyttä</a></p>
+        <p><a href="ota-yhteytta.php">Ota yhteytta</a></p>
     </section>
 </footer>
 
