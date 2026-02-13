@@ -1,75 +1,159 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-?>
+// ====== TIETOKANTA-ASETUKSET (MUOKKAA NÄMÄ) ======
+$servername = "localhost";
+$username   = "amk1013231";
+$password   = "IxNzc6lJ";
+$dbname     = "wp_amk1013231";
 
-<?php
-// tietokantayhteys
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "vieraskirja";
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) die("Yhteys epäonnistui: " . $conn->connect_error);
+// ====== YHDISTÄ TIETOKANTAAN ======
+$conn = new mysqli($servername, $username, $password, $dbname);
+$conn->set_charset("utf8mb4");
 
-// Jos lomake lähetetty, tallenna viesti
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $message = $_POST['message'];
-
-    $stmt = $conn->prepare("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $name, $email, $message);
-    $stmt->execute();
-    $stmt->close();
+if ($conn->connect_error) {
+    die("Tietokantayhteys epäonnistui: " . $conn->connect_error);
 }
 
-// Hae viestit
-$result = $conn->query("SELECT * FROM messages ORDER BY created_at DESC");
+// ====== LOMAKKEEN KÄSITTELY (TALLENNUS) ======
+$success = "";
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Otetaan arvot ja siistitään vähän
+    $name    = trim($_POST["name"] ?? "");
+    $email   = trim($_POST["email"] ?? "");
+    $message = trim($_POST["message"] ?? "");
+
+    if ($name === "" || $email === "" || $message === "") {
+        $error = "Täytä kaikki kentät.";
+    } else {
+        // Turvallisempi INSERT prepared statementilla
+        $stmt = $conn->prepare("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)");
+        if ($stmt) {
+            $stmt->bind_param("sss", $name, $email, $message);
+            if ($stmt->execute()) {
+                $success = "Kiitos! Viestisi tallennettiin.";
+            } else {
+                $error = "Tallennus epäonnistui: " . $stmt->error;
+            }
+            $stmt->close();
+        } else {
+            $error = "Tallennus epäonnistui: " . $conn->error;
+        }
+    }
+}
+
+// ====== HAETAAN VIESTIT LISTAUSTA VARTEN ======
+$result = $conn->query("SELECT id, name, email, message, created_at FROM messages ORDER BY created_at DESC");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ota yhteyttä</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home">
 
-<h2>Ota yhteyttä asiakaspalveluun</h2>
+<header>
+    <nav class="navbar">
+        <h1 class="logo">MovieStar Cinema<span>★</span></h1>
 
-<form action="" method="post">
-    <label>Nimi</label><br>
-    <input type="text" name="name" required><br><br>
+        <ul class="nav-links">
+            <li><a href="index.html">Etusivu</a></li>
+            <li><a href="#">Näytösajat</a></li>
+            <li><a href="liput.html">Liput</a></li>
+            <li><a href="#">Hae</a></li>
+        </ul>
 
-    <label>Sähköposti</label><br>
-    <input type="email" name="email" required><br><br>
+        <div class="nav-buttons">
+            <a href="profiili.html" class="btn">Profiili</a>
+            <a href="liput.html" class="btn">Osta liput</a>
+        </div>
+    </nav>
+</header>
 
-    <label>Viesti</label><br>
-    <textarea name="message" rows="5" required></textarea><br><br>
+<main style="max-width: 900px; margin: 40px auto; padding: 0 16px;">
+    <h2>Ota yhteyttä</h2>
+    <p>Jätä viesti alle. Viestit tallennetaan tietokantaan ja näytetään tällä sivulla.</p>
 
-    <button type="submit">Lähetä</button>
-</form>
+    <?php if ($success !== ""): ?>
+        <div style="border:1px solid #4caf50; padding:10px; margin:15px 0;">
+            <?php echo htmlspecialchars($success, ENT_QUOTES, "UTF-8"); ?>
+        </div>
+    <?php endif; ?>
 
-<h2>Vieraskirja</h2>
+    <?php if ($error !== ""): ?>
+        <div style="border:1px solid #f44336; padding:10px; margin:15px 0;">
+            <?php echo htmlspecialchars($error, ENT_QUOTES, "UTF-8"); ?>
+        </div>
+    <?php endif; ?>
 
-<?php
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo "<div class='viesti'>";
-        echo "<strong>" . htmlspecialchars($row['name']) . "</strong> (" . $row['created_at'] . ")<br>";
-        echo nl2br(htmlspecialchars($row['message']));
-        echo "</div><hr>";
-    }
-} else {
-    echo "<p>Ei vielä viestejä.</p>";
-}
+    <form method="POST" style="margin-top: 20px;">
+        <label>Nimi:</label><br>
+        <input type="text" name="name" required style="width:100%; padding:10px; margin:8px 0;"><br>
 
-$conn->close();
-?>
+        <label>Sähköposti:</label><br>
+        <input type="email" name="email" required style="width:100%; padding:10px; margin:8px 0;"><br>
+
+        <label>Viesti:</label><br>
+        <textarea name="message" required rows="5" style="width:100%; padding:10px; margin:8px 0;"></textarea><br>
+
+        <button type="submit" class="btn">Lähetä</button>
+    </form>
+
+    <hr style="margin: 30px 0;">
+
+    <h3>Lähetetyt viestit</h3>
+
+    <?php if ($result && $result->num_rows > 0): ?>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <div style="border:1px solid #ccc; padding:12px; margin:12px 0; border-radius:8px;">
+                <strong><?php echo htmlspecialchars($row["name"], ENT_QUOTES, "UTF-8"); ?></strong>
+                <span>(<?php echo htmlspecialchars($row["email"], ENT_QUOTES, "UTF-8"); ?>)</span>
+                <br>
+                <p style="margin:10px 0;">
+                    <?php echo nl2br(htmlspecialchars($row["message"], ENT_QUOTES, "UTF-8")); ?>
+                </p>
+                <small><?php echo htmlspecialchars($row["created_at"], ENT_QUOTES, "UTF-8"); ?></small>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p>Ei vielä viestejä.</p>
+    <?php endif; ?>
+
+</main>
+
+<footer>
+    <section>
+        <h4>Info</h4>
+        <p>Edut ja kampanjat</p>
+        <p>Ikärajat</p>
+        <p>Teatterit</p>
+        <p>Aukioloajat</p>
+    </section>
+
+    <section>
+        <h4>Yritys</h4>
+        <p>Tietoa meistä</p>
+        <p>Työpaikat</p>
+        <p>Yhteiskuntavastuu</p>
+    </section>
+
+    <section>
+        <h4>Asiakaspalvelu</h4>
+        <p>asiakaspalvelu@moviestar.fi</p>
+        <p><a href="ota-yhteytta.php">Ota yhteyttä</a></p>
+    </section>
+</footer>
 
 </body>
 </html>
+<?php
+$conn->close();
+?>
+
+
 
