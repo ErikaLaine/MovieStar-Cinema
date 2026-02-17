@@ -1,5 +1,6 @@
 <?php
-// Tietokantayhteys heti sivun alussa
+require_once "db.php";
+
 $servername = "localhost";
 $username = "kayttaja";
 $password = "salasana";
