@@ -1,20 +1,20 @@
 <?php
-require_once "db.php"; // Eveliinan db.php
+require_once "db.php"; // Eveliinan db.php hoitaa yhteyden
 
+// Lomakkeelta lähetetyn tiedon käsittely
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Lomakkeelta saadut tiedot
     $title = $_POST['title'];
     $description = $_POST['description'];
     $year = $_POST['year'];
 
-    // Prepared statement SQL-injectionin välttämiseksi
+    // Prepared statement SQL-injectionin estämiseksi
     $stmt = $conn->prepare("INSERT INTO movies (title, description, year) VALUES (?, ?, ?)");
     $stmt->bind_param("ssi", $title, $description, $year);
 
     if ($stmt->execute()) {
-        // Onnistumisen jälkeen ohjaa admin.php-sivulle
-        header("Location: admin.php");
+        // Onnistuneen lisäyksen jälkeen voi ohjata hallintasivulle
+        header("Location: admin.php"); // vaihda tarvittaessa omaan hallinta-/index-sivuun
         exit();
     } else {
         echo "Virhe: " . $conn->error;
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <title>Lisää elokuva</title>
