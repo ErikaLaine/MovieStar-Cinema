@@ -1,32 +1,24 @@
 <?php
 require_once "db.php";
 
-$servername = "localhost";
-$username = "kayttaja";
-$password = "salasana";
-$dbname = "elokuvaprojekti";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Yhteys epäonnistui: " . $conn->connect_error);
-}
-
-// Lomakkeelta lähetetyn tiedon käsittely
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     $title = $_POST['title'];
     $description = $_POST['description'];
     $year = $_POST['year'];
 
-    // Yksinkertainen SQL-lause lisäystä varten
-    $sql = "INSERT INTO movies (title, description, year) VALUES ('$title', '$description', '$year')";
+    $stmt = $conn->prepare("INSERT INTO movies (title, description, year) VALUES (?, ?, ?)");
+    $stmt->bind_param("ssi", $title, $description, $year);
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Elokuva lisätty!";
+    if ($stmt->execute()) {
+        echo "Elokuva lisätty onnistuneesti!";
     } else {
         echo "Virhe: " . $conn->error;
     }
+
+    $stmt->close();
 }
+
 ?>
 
 <!DOCTYPE html>
