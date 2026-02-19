@@ -1,5 +1,6 @@
 
 <?php
+<<<<<<< HEAD
 
 $servername = "localhost";
 $username   = "amk1013231";
@@ -26,6 +27,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($name === "" || $email === "" || $message === "") {
         $error = "Tayta kaikki kentat.";
+=======
+require_once "db.php"; // Eveliinan db.php hoitaa yhteyden
+
+// Lomakkeelta lähetetyn tiedon käsittely
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $year = $_POST['year'];
+
+    // Prepared statement SQL-injectionin estämiseksi
+    $stmt = $conn->prepare("INSERT INTO movies (title, description, year) VALUES (?, ?, ?)");
+    $stmt->bind_param("ssi", $title, $description, $year);
+
+    if ($stmt->execute()) {
+        // Onnistuneen lisäyksen jälkeen voi ohjata hallintasivulle
+        header("Location: admin.php"); // vaihda tarvittaessa omaan hallinta-/index-sivuun
+        exit();
+>>>>>>> 0a5e71936ddd07df3fc1a3e3c11ae560e6993d56
     } else {
         
         $stmt = $conn->prepare("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)");
@@ -41,6 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $error = "Tallennus epaonnistui: " . $conn->error;
         }
     }
+
+    $stmt->close();
 }
 
 
@@ -48,8 +70,9 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fi">
 <head>
+    <meta charset="UTF-8">
     <title>Lisää elokuva</title>
 </head>
 <body>
@@ -58,13 +81,13 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
 
 <form method="POST" action="">
     <label>Elokuvan nimi:</label><br>
-    <input type="text" name="title"><br><br>
+    <input type="text" name="title" required><br><br>
 
     <label>Kuvaus:</label><br>
-    <textarea name="description"></textarea><br><br>
+    <textarea name="description" required></textarea><br><br>
 
     <label>Julkaisuvuosi:</label><br>
-    <input type="number" name="year"><br><br>
+    <input type="number" name="year" required><br><br>
 
     <input type="submit" value="Lisää elokuva">
 </form>
