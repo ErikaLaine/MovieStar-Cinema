@@ -1,9 +1,9 @@
 <?php
 // TIETOKANTAYHTEYS
 $servername = "localhost";
-$username = "root";      // muuta jos käytätte muuta
-$password = "";          // muuta jos käytätte salasanaa
-$dbname = "elokuvat";    // muuta tietokannan nimi
+$username   = "amk1013231";
+$password   = "IxNzc6lJ";
+$dbname     = "wp_amk1013231";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
