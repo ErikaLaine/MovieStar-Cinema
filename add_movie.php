@@ -1,31 +1,50 @@
+
 <?php
-// Tietokantayhteys heti sivun alussa
+
 $servername = "localhost";
-$username = "kayttaja";
-$password = "salasana";
-$dbname = "elokuvaprojekti";
+$username   = "amk1013231";
+$password   = "IxNzc6lJ";
+$dbname     = "wp_amk1013231";
+
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+$conn->set_charset("utf8mb4");
 
 if ($conn->connect_error) {
-    die("Yhteys epäonnistui: " . $conn->connect_error);
+    die("Tietokantayhteys epaonnistui: " . $conn->connect_error);
 }
 
-// Lomakkeelta lähetetyn tiedon käsittely
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $year = $_POST['year'];
 
-    // Yksinkertainen SQL-lause lisäystä varten
-    $sql = "INSERT INTO movies (title, description, year) VALUES ('$title', '$description', '$year')";
+$success = "";
+$error = "";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Elokuva lisätty!";
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Otetaan arvot ja siistitään vähän
+    $name    = trim($_POST["name"] ?? "");
+    $email   = trim($_POST["email"] ?? "");
+    $message = trim($_POST["message"] ?? "");
+
+    if ($name === "" || $email === "" || $message === "") {
+        $error = "Tayta kaikki kentat.";
     } else {
-        echo "Virhe: " . $conn->error;
+        
+        $stmt = $conn->prepare("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)");
+        if ($stmt) {
+            $stmt->bind_param("sss", $name, $email, $message);
+            if ($stmt->execute()) {
+                $success = "Kiitos! Viestisi tallennettiin.";
+            } else {
+                $error = "Tallennus epaonnistui: " . $stmt->error;
+            }
+            $stmt->close();
+        } else {
+            $error = "Tallennus epaonnistui: " . $conn->error;
+        }
     }
 }
+
+
+$result = $conn->query("SELECT id, name, email, message, created_at FROM messages ORDER BY created_at DESC");
 ?>
 
 <!DOCTYPE html>
