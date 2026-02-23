@@ -1,4 +1,5 @@
 <?php
+require_once "db.php";
 
 $errors = [];
 $values = [
@@ -8,7 +9,7 @@ $values = [
     "varmenna_salasana" => ""
 ];
 
-if ($_SERVER[""] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $values["nimi"] = trim($_POST["nimi"] ?? "");
     $values["sahkoposti"] = trim($_POST["sahkoposti"] ?? "");
     $values["salasana"] = ($_POST["salasana"] ?? "");
@@ -20,7 +21,7 @@ if ($values["nimi"] === "" || strlen($values["nimi"]) < 3) {
     $errors[] = "Nimen pitää olla vähintään 3 merkkiä.";
 }
 
-if ($values["sahkoposti"] === "" || !filter_var($values["sahkoposti"])) {
+if ($values["sahkoposti"] === "" || !filter_var($values["sahkoposti"], FILTER_VALIDATE_EMAIL)) {
     $errors[] = "Syötä kelvollinen sähköposti";
 }
 
@@ -33,8 +34,19 @@ if ($values["salsana"] !== $values["varmenna_salasana"]) {
 }
 
 if (empty($errors)) {
+    $check = $conn->prepare("SELECT id FROM users WHERE sahkoposti = ?");
+    $check->bind_pram("s", $values["sahkoposti"]);
+    $check->execute();
+    $res = $check->get_result();
 
+    if ($res->num_rows > 0) {
+        $errors[] = "Tämä sähköposti on jo käytössä";
+    }
 
+    $check->close();
+}
+
+if (empty($errors)) {
 }
 
 ?>
@@ -65,6 +77,41 @@ if (empty($errors)) {
     </nav>
     <main class="page">
         <h1 class="page-title">Luo Profiili</h1>
+
+        <?php if (!empty($errors)): ?>
+            <div class="form-errors">
+                <h3>Tarkista:</h3>
+                <ul>
+                    <?php fpreach ($errors as $e): ?>
+                    <li><?=htmlspecialchar($e) ?></li>
+                    <?php endfpreach: ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
+        <from class="form-card" method="POST" action="rekisteroidy.php" novalidate>
+            <label class="form-label">
+                Nimi
+                <input class="form-input" type="teksti" name="nimi" value=<? htmlspecialchars($values["name"]) ?> required />
+            </label>
+
+            <label class="form-label">
+                Sähköposti
+                <input class="form-input" type="sahkoposti" name="sahkoposti" value=<? htmlspecialchars($values["sahkoposti"]) ?> required />
+            </label>
+
+            <label class="form-label">
+                Salasana
+                <input class="form-input" type="salasana" name="salasana" required />
+            </label>
+
+            <label class="form-label">
+                Varmenna salasana
+                <input class="form-input" type="salasana" name="varmenna_salasana" required />
+            </label>
+
+            <button class="btn btn-primary" type="submit">Luo profiili</button>
+        </form>
     </main>
 
     
