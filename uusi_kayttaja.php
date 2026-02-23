@@ -47,6 +47,21 @@ if (empty($errors)) {
 }
 
 if (empty($errors)) {
+    $hash = password_hash($values["salsana"], PASSWORD_DEFAULT);
+
+    $stmt = $conn->prepare(
+        "INSERT INTO users (nimi, sahkoposti, salasana_hash) VALUES (?, ?, ?)"
+    );
+    $stmt->bind_pram("sss", $values["nimi"], $values["sahkoposti"], $hash);
+
+    if ($stmt->execute()) {
+        header("Location: "".php?sahkoposti=" . urlencode($values["sahkoposti"]));
+        exit;
+    } else {
+        $errors[] = "Tallennus epäonnistui" . $stmt->error;
+    }
+
+    $stmt->close();
 }
 
 ?>
