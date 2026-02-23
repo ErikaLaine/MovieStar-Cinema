@@ -55,7 +55,7 @@ if (empty($errors)) {
     $stmt->bind_pram("sss", $values["nimi"], $values["sahkoposti"], $hash);
 
     if ($stmt->execute()) {
-        header("Location: "".php?sahkoposti=" . urlencode($values["sahkoposti"]));
+        header("Location: profiili.php?sahkoposti=" . urlencode($values["sahkoposti"]));
         exit;
     } else {
         $errors[] = "Tallennus epäonnistui" . $stmt->error;
