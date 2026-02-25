@@ -55,7 +55,7 @@ if (empty($errors)) {
     $stmt->bind_pram("sss", $values["nimi"], $values["sahkoposti"], $hash);
 
     if ($stmt->execute()) {
-        header("Location: "".php?sahkoposti=" . urlencode($values["sahkoposti"]));
+        header("Location: profiili.php?sahkoposti=" . urlencode($values["sahkoposti"]));
         exit;
     } else {
         $errors[] = "Tallennus epäonnistui" . $stmt->error;
@@ -104,20 +104,20 @@ if (empty($errors)) {
             </div>
         <?php endif; ?>
 
-        <from class="form-card" method="POST" action="rekisteroidy.php" novalidate>
+        <from class="form-card" method="POST" action="uusi_kayttaja.php" novalidate>
             <label class="form-label">
                 Nimi
-                <input class="form-input" type="teksti" name="nimi" value=<? htmlspecialchars($values["name"]) ?> required />
+                <input class="form-input" type="text" name="nimi" value=<? htmlspecialchars($values["nimi"]) ?> required />
             </label>
 
             <label class="form-label">
                 Sähköposti
-                <input class="form-input" type="sahkoposti" name="sahkoposti" value=<? htmlspecialchars($values["sahkoposti"]) ?> required />
+                <input class="form-input" type="email" name="sahkoposti" value=<? htmlspecialchars($values["sahkoposti"]) ?> required />
             </label>
 
             <label class="form-label">
                 Salasana
-                <input class="form-input" type="salasana" name="salasana" required />
+                <input class="form-input" type="password" name="salasana" required />
             </label>
 
             <label class="form-label">
