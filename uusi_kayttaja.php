@@ -98,9 +98,9 @@ if (empty($errors)) {
             <div class="form-errors">
                 <h3>Tarkista:</h3>
                 <ul>
-                    <?php fpreach ($errors as $e): ?>
+                    <?php foreach ($errors as $e): ?>
                     <li><?=htmlspecialchar($e) ?></li>
-                    <?php endfpreach: ?>
+                    <?php endforeach: ?>
                 </ul>
             </div>
         <?php endif; ?>
