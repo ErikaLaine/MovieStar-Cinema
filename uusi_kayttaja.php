@@ -94,16 +94,16 @@ if (empty($errors)) {
     <main class="page">
         <h1 class="page-title">Luo Profiili</h1>
 
-        <?php if (!empty($errors)): ?>
-            <div class="form-errors">
-                <h3>Tarkista:</h3>
-                <ul>
-                    <?php foreach ($errors as $e): ?>
-                    <li><?=htmlspecialchar($e) ?></li>
-                    <?php endforeach: ?>
-                </ul>
-            </div>
-        <?php endif; ?>
+    <?php if (!empty($errors)): ?>
+    <div class="form-errors">
+        <h3>Tarkista:</h3>
+        <ul>
+            <?php foreach ($errors as $e): ?>
+                <li><?= htmlspecialchars($e) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <?php endif; ?>
 
         <from class="form-card" method="POST" action="uusi_kayttaja.php" novalidate>
             <label class="form-label">
