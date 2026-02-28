@@ -1,17 +1,3 @@
-<?php
-// TIETOKANTAYHTEYS
-$servername = "localhost";
-$username   = "amk1013231";
-$password   = "IxNzc6lJ";
-$dbname     = "wp_amk1013231";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Tarkista yhteys
-if ($conn->connect_error) {
-    die("Yhteys epäonnistui: " . $conn->connect_error);
-}
-?>
 
 <?php
 require_once "db.php";
