@@ -121,9 +121,8 @@ if (empty($errors)) {
 
             <button class="btn btn-primary" type="submit">Luo profiili</button>
         </form>
-    </main>
 
-     <footer>
+        <footer>
 
         <section>
             <h4>Info</h4>
@@ -149,8 +148,6 @@ if (empty($errors)) {
         </section>
 
     </footer>
-
-    
-
+    </main>
 </body>
 </html>
