@@ -85,7 +85,7 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
   <?php endif; ?>
 
   <?php if (!empty($sent_preview)): ?>
-    <div class="viesti">
+    <div class="message">
       <strong>Lähetit tämän (<?= htmlspecialchars($sent_preview["nimi"]) ?>):</strong>
       <p><?= nl2br(htmlspecialchars($sent_preview["viesti"])) ?></p>
     </div>
@@ -104,16 +104,16 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
     <button type="submit" class="btn">Lähetä</button>
   </form>
 
-  <hr>
+  <hr class="divider">
 
   <h3>Lähetetyt viestit</h3>
 
   <?php
   while ($row = $result->fetch_assoc()) {
-      echo "<div>";
+      echo "<div class='message'>";
       echo "<strong>" . htmlspecialchars($row["nimi"]) . "</strong><br>";
       echo nl2br(htmlspecialchars($row["viesti"]));
-      echo "<hr>";
+      
       echo "</div>";
   }
   ?>
