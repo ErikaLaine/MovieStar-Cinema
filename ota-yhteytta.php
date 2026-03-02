@@ -7,6 +7,7 @@ require_once "db.php";
 
 $success = "";
 $error = "";
+$sent_preview = null;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
