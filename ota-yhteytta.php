@@ -23,6 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bind_param("sss", $nimi, $sahkoposti, $viesti);
             if ($stmt->execute()) {
                 $success = "Kiitos! Viestisi tallennettiin.";
+
+                $sent_preview = [
+                "nimi" => $nimi,
+                "viesti" => $viesti
+            ];
             } else {
                 $error = "Tallennus epaonnistui: " . $stmt->error;
             }
@@ -66,6 +71,39 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
     </nav>
 </header>
 
+<main class="page">
+
+  <h2>Ota yhteyttä</h2>
+
+  <?php if ($success !== ""): ?>
+    <div class="alert alert--success"><?= htmlspecialchars($success) ?></div>
+  <?php endif; ?>
+
+  <?php if ($error !== ""): ?>
+    <div class="alert alert--error"><?= htmlspecialchars($error) ?></div>
+  <?php endif; ?>
+
+  <?php if (!empty($sent_preview)): ?>
+    <div class="viesti">
+      <strong>Lähetit tämän (<?= htmlspecialchars($sent_preview["nimi"]) ?>):</strong>
+      <p><?= nl2br(htmlspecialchars($sent_preview["viesti"])) ?></p>
+    </div>
+  <?php endif; ?>
+
+  <form method="POST" class="form">
+    <label>Nimi</label>
+    <input type="text" name="nimi" required>
+
+    <label>Sahkoposti</label>
+    <input type="email" name="sahkoposti" required>
+
+    <label>Viesti</label>
+    <textarea name="viesti" rows="5" required></textarea>
+
+    <button type="submit" class="btn">Lähetä</button>
+  </form>
+
+  </main>
 
 
 <footer>
