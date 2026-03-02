@@ -7,7 +7,7 @@ require_once "db.php";
 
 $success = "";
 $error = "";
-$sent_preview = null;
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
@@ -103,6 +103,22 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
 
     <button type="submit" class="btn">Lähetä</button>
   </form>
+
+  <hr>
+
+  <h3>Lähetetyt viestit</h3>
+
+  <?php
+  while ($row = $result->fetch_assoc()) {
+      echo "<div>";
+      echo "<strong>" . htmlspecialchars($row["nimi"]) . "</strong><br>";
+      echo nl2br(htmlspecialchars($row["viesti"]));
+      echo "<hr>";
+      echo "</div>";
+  }
+  ?>
+
+
 
   </main>
 
