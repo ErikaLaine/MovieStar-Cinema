@@ -78,7 +78,7 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
 
 <main style="max-width: 900px; margin: 40px auto; padding: 0 16px;">
     <h2>Ota yhteytta</h2>
-    <p>Jata viesti alle. Viestit tallennetaan tietokantaan ja naytetaan talla sivulla.</p>
+    
 
     <?php if ($success !== ""): ?>
         <div style="border:1px solid #4caf50; padding:10px; margin:15px 0;">
@@ -108,22 +108,6 @@ $result = $conn->query("SELECT id, name, email, message, created_at FROM message
     <hr style="margin: 30px 0;">
 
     <h3>Lahetetyt viestit</h3>
-
-    <?php if ($result && $result->num_rows > 0): ?>
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <div style="border:1px solid #ccc; padding:12px; margin:12px 0; border-radius:8px;">
-                <strong><?php echo htmlspecialchars($row["name"], ENT_QUOTES, "UTF-8"); ?></strong>
-                <span>(<?php echo htmlspecialchars($row["email"], ENT_QUOTES, "UTF-8"); ?>)</span>
-                <br>
-                <p style="margin:10px 0;">
-                    <?php echo nl2br(htmlspecialchars($row["message"], ENT_QUOTES, "UTF-8")); ?>
-                </p>
-                <small><?php echo htmlspecialchars($row["created_at"], ENT_QUOTES, "UTF-8"); ?></small>
-            </div>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <p>Ei viela viesteja.</p>
-    <?php endif; ?>
 
 </main>
 
