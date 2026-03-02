@@ -13,7 +13,7 @@ $values = [
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $values["nimi"] = trim($_POST["nimi"] ?? "");
     $values["sahkoposti"] = trim($_POST["sahkoposti"] ?? "");
-    $values["salasana"] = ($_POST["salasana"] ?? "");
+    $values["sahkoposti"] = trim($_POST["sahkoposti"] ?? "");
     $values["varmenna_salasana"] = ($_POST["varmenna_salasana"] ?? "");
     
 }
