@@ -1,6 +1,6 @@
 
 <?php
-require_once "db.php"; //$con-muuttuja 
+require_once "db.php";
 
 $errors = [];
 $nimi = "";
