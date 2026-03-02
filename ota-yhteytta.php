@@ -65,40 +65,7 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
     </nav>
 </header>
 
-<main style="max-width: 900px; margin: 40px auto; padding: 0 16px;">
-    <h2>Ota yhteytta</h2>
-    
 
-    <?php if ($success !== ""): ?>
-        <div style="border:1px solid #4caf50; padding:10px; margin:15px 0;">
-            <?php echo htmlspecialchars($success, ENT_QUOTES, "UTF-8"); ?>
-        </div>
-    <?php endif; ?>
-
-    <?php if ($error !== ""): ?>
-        <div style="border:1px solid #f44336; padding:10px; margin:15px 0;">
-            <?php echo htmlspecialchars($error, ENT_QUOTES, "UTF-8"); ?>
-        </div>
-    <?php endif; ?>
-
-    <form method="POST" style="margin-top: 20px;">
-        <label>Nimi:</label><br>
-        <input type="text" name="name" required style="width:100%; padding:10px; margin:8px 0;"><br>
-
-        <label>Sahkoposti:</label><br>
-        <input type="email" name="email" required style="width:100%; padding:10px; margin:8px 0;"><br>
-
-        <label>Viesti:</label><br>
-        <textarea name="message" required rows="5" style="width:100%; padding:10px; margin:8px 0;"></textarea><br>
-
-        <button type="submit" class="btn">Lähetä</button>
-    </form>
-
-    <hr style="margin: 30px 0;">
-
-    <h3>Lahetetyt viestit</h3>
-
-</main>
 
 <footer>
     <section>
