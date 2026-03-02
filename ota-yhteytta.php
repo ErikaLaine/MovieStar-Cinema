@@ -3,8 +3,6 @@
 require_once "db.php";
 
 
-$success = "";
-$error = "";
 
 $sent_nimi = "";
 $sent_viesti = "";
@@ -15,32 +13,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nimi = trim($_POST["nimi"] ?? "");
     $sahkoposti = trim($_POST["sahkoposti"] ?? "");
     $viesti = trim($_POST["viesti"] ?? "");
-
-    if ($nimi === "" || $sahkoposti === "" || $viesti === "") {
-        $error = "Tayta kaikki kentat.";
-    } else {
         
         $stmt = $conn->prepare("INSERT INTO viestit (nimi, sahkoposti, viesti) VALUES (?, ?, ?)");
         if ($stmt) {
             $stmt->bind_param("sss", $nimi, $sahkoposti, $viesti);
             if ($stmt->execute()) {
-                $success = "Kiitos! Viestisi tallennettiin.";
+                
                 $sent_nimi = $nimi;
                 $sent_viesti = $viesti;
-
             
-            } else {
-                $error = "Tallennus epaonnistui: " . $stmt->error;
             }
             $stmt->close();
-        } else {
-            $error = "Tallennus epaonnistui: " . $conn->error;
-        }
+        
     }
 }
 
-
-$result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM viestit ORDER BY created_at DESC");
 ?>
 
 
@@ -76,13 +63,7 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
   <h2>Ota yhteyttä</h2>
 
   <?php
-  if ($success != "") {
-      echo '<div class="alert alert--success">' . htmlspecialchars($success) . '</div>';
-  }
 
-  if ($error != "") {
-      echo '<div class="alert alert--error">' . htmlspecialchars($error) . '</div>';
-  }
 
   if ($sent_viesti != "") {
       echo '<div class="message">';
