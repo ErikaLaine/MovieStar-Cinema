@@ -101,12 +101,12 @@ if (empty($errors)) {
         <from class="form-card" method="POST" action="uusi_kayttaja.php" novalidate>
             <label class="form-label">
                 Nimi
-                <input class="form-input" type="text" name="nimi" value=<? htmlspecialchars($values["nimi"]) ?> required />
+                <input class="form-input" type="text" name="nimi" value=<? htmlspecialchars($nimi) ?> required />
             </label>
 
             <label class="form-label">
                 Sähköposti
-                <input class="form-input" type="email" name="sahkoposti" value=<? htmlspecialchars($values["sahkoposti"]) ?> required />
+                <input class="form-input" type="email" name="sahkoposti" value=<? htmlspecialchars($sahkoposti) ?> required />
             </label>
 
             <label class="form-label">
