@@ -9,9 +9,9 @@ $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Otetaan arvot ja siistitään vähän
-    $name    = trim($_POST["name"] ?? "");
-    $email   = trim($_POST["email"] ?? "");
-    $message = trim($_POST["message"] ?? "");
+    $values["nimi"] = trim($_POST["nimi"] ?? "");
+    $values["sahkoposti"] = trim($_POST["sahkoposti"] ?? "");
+    $values["viesti"] = trim($_POST["viesti"] ?? "");
 
     if ($name === "" || $email === "" || $message === "") {
         $error = "Tayta kaikki kentat.";
