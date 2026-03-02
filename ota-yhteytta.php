@@ -8,7 +8,7 @@ $success = "";
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Otetaan arvot ja siistitään vähän
+    
     $nimi = trim($_POST["nimi"] ?? "");
     $sahkoposti = trim($_POST["sahkoposti"] ?? "");
     $viesti = trim($_POST["viesti"] ?? "");
