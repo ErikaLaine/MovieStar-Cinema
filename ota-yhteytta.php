@@ -2,7 +2,7 @@
 <?php
 
 $servername = "localhost";
-$username   = "trtkm25a_12;
+$username   = "trtkm25a_12";
 $password   = "NB6NgN3X";
 $dbname     = "wp_trtkm25a_12";
 
