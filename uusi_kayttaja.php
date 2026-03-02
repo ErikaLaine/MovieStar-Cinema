@@ -3,34 +3,30 @@
 require_once "db.php";
 
 $errors = [];
-$values = [
-    "nimi" => "",
-    "sahkoposti" => "",
-    "salasana" => "",
-    "varmenna_salasana" => ""
-];
+$nimi = "";
+$sahkoposti = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $values["nimi"] = trim($_POST["nimi"] ?? "");
-    $values["sahkoposti"] = trim($_POST["sahkoposti"] ?? "");
-    $values["salasana"] = ($_POST["salasana"] ?? "");
-    $values["varmenna_salasana"] = ($_POST["varmenna_salasana"] ?? "");
+    $nimi = trim($_POST["nimi"] ?? "");
+    $sahkoposti = trim($_POST["sahkoposti"] ?? "");
+    $salasana = $_POST["salasana"] ?? "";
+    $varmennus = $_POST["varmenna_salasana"] ?? "";
     
 }
 
-if ($values["nimi"] === "" || strlen($values["nimi"]) < 3) {
+if ($nimi === "" || strlen($nimi) < 3) {
     $errors[] = "Nimen pitää olla vähintään 3 merkkiä.";
 }
 
-if ($values["sahkoposti"] === "" || !filter_var($values["sahkoposti"], FILTER_VALIDATE_EMAIL)) {
+if ($sahkoposti === "" || !filter_var($sahkoposti, FILTER_VALIDATE_EMAIL)) {
     $errors[] = "Syötä kelvollinen sähköposti";
 }
 
-if (strlen($values["salasana"]) <5) {
-    $errors[] = "Salasanan tulee olla vähintään 6 merkkiä pitkä.";
+if (strlen($salasana) <5) {
+    $errors[] = "Salasanan tulee olla vähintään 5 merkkiä pitkä.";
 }
 
-if ($values["salsana"] !== $values["varmenna_salasana"]) {
+if ($salasana !== $varmennus) {
     $errors[] = "Salasana ei täsmää.";
 }
 
@@ -49,10 +45,7 @@ if (empty($errors)) {
 
 if (empty($errors)) {
     $hash = password_hash($values["salsana"], PASSWORD_DEFAULT);
-
-    $stmt = $conn->prepare(
-        "INSERT INTO users (nimi, sahkoposti, salasana_hash) VALUES (?, ?, ?)"
-    );
+    $stmt = $conn->prepare( "INSERT INTO users (nimi, sahkoposti, salasana_hash) VALUES (?, ?, ?)");
     $stmt->bind_pram("sss", $values["nimi"], $values["sahkoposti"], $hash);
 
     if ($stmt->execute()) {
