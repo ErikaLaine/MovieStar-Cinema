@@ -75,20 +75,22 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
 <main class="page">
   <h2>Ota yhteyttä</h2>
 
-  <?php if ($success !== ""): ?>
-    <div class="alert alert--success"><?= htmlspecialchars($success) ?></div>
-  <?php endif; ?>
+  <?php
+  if ($success != "") {
+      echo '<div class="alert alert--success">' . htmlspecialchars($success) . '</div>';
+  }
 
-  <?php if ($error !== ""): ?>
-    <div class="alert alert--error"><?= htmlspecialchars($error) ?></div>
-  <?php endif; ?>
+  if ($error != "") {
+      echo '<div class="alert alert--error">' . htmlspecialchars($error) . '</div>';
+  }
 
-  <?php if ($sent_viesti !== ""): ?>
-    <div class="message">
-      <strong>Lähetit tämän (<?= htmlspecialchars($sent_nimi) ?>):</strong>
-      <p><?= nl2br(htmlspecialchars($sent_viesti)) ?></p>
-    </div>
-  <?php endif; ?>
+  if ($sent_viesti != "") {
+      echo '<div class="message">';
+      echo '<strong>Lähetit tämän (' . htmlspecialchars($sent_nimi) . '):</strong>';
+      echo '<p>' . nl2br(htmlspecialchars($sent_viesti)) . '</p>';
+      echo '</div>';
+  }
+  ?>
 
   <form method="POST" class="form">
     <label>Nimi</label>
