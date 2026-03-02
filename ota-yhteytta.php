@@ -2,9 +2,9 @@
 <?php
 
 $servername = "localhost";
-$username   = "amk1013231";
-$password   = "IxNzc6lJ";
-$dbname     = "wp_amk1013231";
+$username   = "trtkm25a_12;
+$password   = "NB6NgN3X";
+$dbname     = "wp_trtkm25a_12";
 
 
 $conn = new mysqli($servername, $username, $password, $dbname);
