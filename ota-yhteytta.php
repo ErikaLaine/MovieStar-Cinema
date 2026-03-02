@@ -3,11 +3,12 @@
 require_once "db.php";
 
 
-
-
 $success = "";
 $error = "";
-$sent_preview = null;
+
+$sent_nimi = "";
+$sent_viesti = "";
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
@@ -24,11 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bind_param("sss", $nimi, $sahkoposti, $viesti);
             if ($stmt->execute()) {
                 $success = "Kiitos! Viestisi tallennettiin.";
+                $sent_nimi = $nimi;
+                $sent_viesti = $viesti;
 
-                $sent_preview = [
-                "nimi" => $nimi,
-                "viesti" => $viesti
-            ];
+            
             } else {
                 $error = "Tallennus epaonnistui: " . $stmt->error;
             }
@@ -73,7 +73,6 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
 </header>
 
 <main class="page">
-
   <h2>Ota yhteyttä</h2>
 
   <?php if ($success !== ""): ?>
@@ -84,44 +83,26 @@ $result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM vie
     <div class="alert alert--error"><?= htmlspecialchars($error) ?></div>
   <?php endif; ?>
 
-  <?php if (!empty($sent_preview)): ?>
+  <?php if ($sent_viesti !== ""): ?>
     <div class="message">
-      <strong>Lähetit tämän (<?= htmlspecialchars($sent_preview["nimi"]) ?>):</strong>
-      <p><?= nl2br(htmlspecialchars($sent_preview["viesti"])) ?></p>
+      <strong>Lähetit tämän (<?= htmlspecialchars($sent_nimi) ?>):</strong>
+      <p><?= nl2br(htmlspecialchars($sent_viesti)) ?></p>
     </div>
   <?php endif; ?>
 
   <form method="POST" class="form">
     <label>Nimi</label>
-    <input type="text" name="nimi" required>
+    <input class="form__input" type="text" name="nimi" required>
 
-    <label>Sahkoposti</label>
-    <input type="email" name="sahkoposti" required>
+    <label>Sähköposti</label>
+    <input class="form__input" type="email" name="sahkoposti" required>
 
     <label>Viesti</label>
-    <textarea name="viesti" rows="5" required></textarea>
+    <textarea class="form__textarea" name="viesti" rows="5" required></textarea>
 
     <button type="submit" class="btn">Lähetä</button>
   </form>
-
-  <hr class="divider">
-
-  <h3>Lähetetyt viestit</h3>
-
-  <?php
-  while ($row = $result->fetch_assoc()) {
-      echo "<div class='message'>";
-      echo "<strong>" . htmlspecialchars($row["nimi"]) . "</strong><br>";
-      echo nl2br(htmlspecialchars($row["viesti"]));
-      
-      echo "</div>";
-  }
-  ?>
-
-
-
-  </main>
-
+</main>
 
 <footer>
     <section>
