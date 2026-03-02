@@ -1,18 +1,7 @@
 
 <?php
 
-$servername = "localhost";
-$username   = "trtkm25a_12";
-$password   = "NB6NgN3X";
-$dbname     = "wp_trtkm25a_12";
-
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-$conn->set_charset("utf8mb4");
-
-if ($conn->connect_error) {
-    die("Tietokantayhteys epaonnistui: " . $conn->connect_error);
-}
+require_once "db.php";
 
 
 $success = "";
