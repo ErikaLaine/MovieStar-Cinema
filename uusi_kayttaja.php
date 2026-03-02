@@ -101,52 +101,25 @@ if (empty($errors)) {
         <from class="form-card" method="POST" action="uusi_kayttaja.php" novalidate>
             <label class="form-label">
                 Nimi
-                <input class="form-input" type="text" name="nimi" value=<? htmlspecialchars($nimi) ?> required />
+                <input class="form-input" type="text" name="nimi" value=<? htmlspecialchars($nimi) ?>/>
             </label>
 
             <label class="form-label">
                 Sähköposti
-                <input class="form-input" type="email" name="sahkoposti" value=<? htmlspecialchars($sahkoposti) ?> required />
+                <input class="form-input" type="email" name="sahkoposti" value=<? htmlspecialchars($sahkoposti) ?>/>
             </label>
 
             <label class="form-label">
                 Salasana
-                <input class="form-input" type="password" name="salasana" required />
+                <input class="form-input" type="password" name="salasana"/>
             </label>
 
             <label class="form-label">
                 Varmenna salasana
-                <input class="form-input" type="salasana" name="varmenna_salasana" required />
+                <input class="form-input" type="salasana" name="varmenna_salasana"/>
             </label>
 
             <button class="btn btn-primary" type="submit">Luo profiili</button>
-
-            <footer>
-
-                 <section>
-                     <h4>Info</h4>
-                      <p>Edut ja kampanjat</p>
-                      <p>Ikärajat</p>
-                      <p>Teatterit</p>
-                      <p>Aukioloajat</p>
-                 </section>
-
-                  <section>
-                     <h4>Yritys</h4>
-                     <p>Tietoa meistä</p>
-                     <p>Työpaikat</p>
-                     <p>Yhteiskuntavastuu</p>
-                     </section>
-
-                  <section>
-                      <h4>Asiakaspalvelu</h4>
-                      <p>asiakaspalvelu@moviestar.fi</p>
-                      <p><a href="ota-yhteytta.php">Ota yhteyttä</a></p>
-
-
-                    </section>
-
-             </footer>
         </form>
     </main>
 </body>
