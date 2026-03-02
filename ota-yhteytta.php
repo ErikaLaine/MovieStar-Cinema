@@ -13,13 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $values["sahkoposti"] = trim($_POST["sahkoposti"] ?? "");
     $values["viesti"] = trim($_POST["viesti"] ?? "");
 
-    if ($name === "" || $email === "" || $message === "") {
+    if ($nimi === "" || $sahkoposti === "" || $viesti === "") {
         $error = "Tayta kaikki kentat.";
     } else {
         
-        $stmt = $conn->prepare("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO viestit (nimi, sahkoposti, viesti) VALUES (?, ?, ?)");
         if ($stmt) {
-            $stmt->bind_param("sss", $name, $email, $message);
+            $stmt->bind_param("sss", $nimi, $sahkoposti, $viesti);
             if ($stmt->execute()) {
                 $success = "Kiitos! Viestisi tallennettiin.";
             } else {
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 
-$result = $conn->query("SELECT id, name, email, message, created_at FROM messages ORDER BY created_at DESC");
+$result = $conn->query("SELECT id, nimi, sahkoposti, viesti, created_at FROM viestit ORDER BY created_at DESC");
 ?>
 
 
