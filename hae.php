@@ -1,23 +1,25 @@
 <?php
 require_once "db.php";
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 $hakusana = "";
 
 if ($conn->connect_error) {
     die("Yhteys epäonnistui: " . $conn->connect_error);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hae elokuvia | MovieStar Cinema</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
     <nav class="navbar">
         <h1 class="logo">MovieStar Cinema<span>★</span></h1>
         <ul class="nav-links">
@@ -49,35 +51,41 @@ if ($conn->connect_error) {
         if(isset($_GET['hakusana'])){
             $hakusana = trim($_GET['hakusana']);
             if($hakusana != ""){
-                $stmt = $conn->prepare("SELECT * FROM movies WHERE title LIKE ?");
-                if($stmt){
-                    $haku = "%".$hakusana."%";
-                    $stmt->bind_param("s", $haku);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    if($result && $result->num_rows>0){
-                        while($row = $result->fetch_assoc()){
-                            echo "<div class='movie'>";
-                            echo "<h3>".htmlspecialchars($row['title'])."</h3>";
-                            echo "<p><strong>Vuosi:</strong> ".htmlspecialchars($row['year'])."</p>";
-                            echo "<p><strong>Genre:</strong> ".htmlspecialchars($row['genre'])."</p>";
-                            echo "<p>".htmlspecialchars($row['description'])."</p>";
-                            if(!empty($row['image'])){
-                                echo "<img src='".htmlspecialchars($row['image'])."' width='150'>";
-                            }
-                            echo "</div>";
-                        }
-                    } else {
-                        echo "<p>Ei hakutuloksia.</p>";
-                    }
-                    $stmt->close();
-                } else {
-                    echo "<p>Haku ei ole käytettävissä.</p>";
+                
+                $stmt = $conn->prepare("SELECT nimi, vuosi, genre, kuvaus, kuva FROM elokuvat WHERE nimi LIKE ?");
+                if(!$stmt){
+                    die("SQL-virhe: " . $conn->error);
                 }
+
+                $haku = "%".$hakusana."%";
+                $stmt->bind_param("s", $haku);
+                $stmt->execute();
+                
+                $stmt->bind_result($nimi, $vuosi, $genre, $kuvaus, $kuva);
+                $found = false;
+                while($stmt->fetch()){
+                    $found = true;
+                    echo "<div class='movie'>";
+                    echo "<h3>".htmlspecialchars($nimi)."</h3>";
+                    echo "<p><strong>Vuosi:</strong> ".htmlspecialchars($vuosi)."</p>";
+                    echo "<p><strong>Genre:</strong> ".htmlspecialchars($genre)."</p>";
+                    echo "<p>".htmlspecialchars($kuvaus)."</p>";
+                    if(!empty($kuva)){
+                        echo "<img src='".htmlspecialchars($kuva)."' width='150'>";
+                    }
+                    echo "</div>";
+                }
+
+                if(!$found){
+                    echo "<p>Ei hakutuloksia.</p>";
+                }
+
+                $stmt->close();
             } else {
                 echo "<p>Kirjoita hakusana.</p>";
             }
         }
+
         $conn->close();
         ?>
     </main>
