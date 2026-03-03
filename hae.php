@@ -54,27 +54,53 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </header>
 
 <main class="page">
-    <h2>Ota yhteyttä</h2>
+    <h1 class="page-title">Hae elokuvia</h1>
 
-    <?php if ($sent_viesti != ""): ?>
-        <div class="message">
-            <strong>Lähetit tämän (<?= htmlspecialchars($sent_nimi) ?>):</strong>
-            <p><?= nl2br(htmlspecialchars($sent_viesti)) ?></p>
-        </div>
-    <?php endif; ?>
-
-    <form method="POST" class="form">
-        <label>Nimi</label>
-        <input class="form__input" type="text" name="nimi" required>
-
-        <label>Sähköposti</label>
-        <input class="form__input" type="email" name="sahkoposti" required>
-
-        <label>Viesti</label>
-        <textarea class="form__textarea" name="viesti" rows="5" required></textarea>
-
-        <button type="submit" class="btn btn-primary">Lähetä</button>
+    <form class="form-card" method="GET" novalidate>
+        <label class="form-label">
+            Hakusana
+            <input class="form-input" type="text" name="hakusana" value="<?= htmlspecialchars($hakusana) ?>" placeholder="Kirjoita elokuvan nimi">
+        </label>
+        <button class="btn btn-primary" type="submit">Hae</button>
     </form>
+
+    <hr>
+
+    <?php
+    if(isset($_GET['hakusana'])){
+        $hakusana = trim($_GET['hakusana']);
+        if($hakusana != ""){
+            $stmt = $conn->prepare("SELECT nimi, vuosi, genre, kuvaus, kuva FROM elokuvat WHERE nimi LIKE ?");
+            if(!$stmt){
+                die("SQL-virhe: " . $conn->error);
+            }
+            $haku = "%".$hakusana."%";
+            $stmt->bind_param("s", $haku);
+            $stmt->execute();
+            $stmt->bind_result($nimi, $vuosi, $genre, $kuvaus, $kuva);
+
+            $found = false;
+            while($stmt->fetch()){
+                $found = true;
+                echo "<div class='movie'>";
+                echo "<h3>".htmlspecialchars($nimi)."</h3>";
+                echo "<p><strong>Vuosi:</strong> ".htmlspecialchars($vuosi)."</p>";
+                echo "<p><strong>Genre:</strong> ".htmlspecialchars($genre)."</p>";
+                echo "<p>".htmlspecialchars($kuvaus)."</p>";
+                if(!empty($kuva)){
+                    echo "<img src='".htmlspecialchars($kuva)."' width='150'>";
+                }
+                echo "</div>";
+            }
+            if(!$found){
+                echo "<p>Ei hakutuloksia.</p>";
+            }
+            $stmt->close();
+        } else {
+            echo "<p>Kirjoita hakusana.</p>";
+        }
+    }
+    ?>
 </main>
 
 <footer>
