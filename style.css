@@ -8,7 +8,8 @@
 }
 
 body {
-  background-color: #f9f4f4;
+  background-color: #1c1c1c;
+  
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -17,7 +18,7 @@ body {
    HEADER & NAVBAR (kaikille sivuille)
    ===================================================== */
 header {
-  background-color: #080808;
+  background-color: #111;
 }
 
 .navbar {
@@ -25,7 +26,7 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background-color: #080808;
+  
 }
 
 .logo {
@@ -51,13 +52,17 @@ header {
   color: #e50914;
 }
 
+.nav-buttons .btn {
+  margin-left: 0.5rem;
+}
+
 .btn {
   background-color: #b30000;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   text-decoration: none;
-  margin-left: 0.5rem;
+  
 }
 
 .btn:hover {
@@ -69,7 +74,7 @@ header {
    ===================================================== */
 .hero {
   position: relative;
-  height: 300px;
+  height: 350px;
   overflow: hidden;
 }
 
@@ -79,25 +84,576 @@ header {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  z-index: 0;
+  
+  
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+.hero-content { 
+  position: relative; 
   z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
   padding: 2rem;
+  
 }
 
-/* =================*
+.hero-content h2 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+/* =====================================================
+   MAIN – OLETUS (kaikki muut sivut)
+   ===================================================== */
+main {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* =====================================================
+   ETUSIVU LAYOUT (VAIN ETUSIVU!)
+   ===================================================== */
+.home main {
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 32px;
+}
+
+/* =====================================================
+   MOVIES (etusivu)
+   ===================================================== */
+.movies {
+  margin-bottom: 32px;
+}
+
+.movies h2,
+.movies h3 {
+  margin-bottom: 16px;
+  font-size: 1.4rem;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.movie-card img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+
+/* =====================================================
+   KATSO TARJOUKSET – CTA (etusivu)
+   ===================================================== */
+.sales-link {
+  text-decoration: none;
+}
+
+.sales {
+  margin: 32px 0;
+  padding: 24px;
+  background: linear-gradient(135deg, #b30000, #e50914);
+  border-radius: 14px;
+  text-align: center;
+  color: white;
+}
+
+.sales h2 {
+  font-size: 1.6rem;
+}
+
+/* =====================================================
+   
+   TARJOUKSET
+   ===================================================== */
+
+   .sidebar {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 20px;
+  height: fit-content;
+}
+
+.sidebar h3 {
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-bottom: 24px;
+}
+
+.sidebar li {
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+/* =====================================================
+   TARJOUKSET & MUUT PALVELUT (omat sivut)
+   ===================================================== */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  margin: 10px 0 18px;
+}
+
+/* tarjoukset */
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.offer-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.offer-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+}
+
+.offer-card p {
+  opacity: 0.9;
+  line-height: 1.5;
+}
+.offer-price {
+  margin-top: 12px;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+/* muut palvelut */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.service-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.service-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+}
+
+.service-card p {
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.service-note {
+  margin-top: 12px;
+  font-weight: 700;
+}
+
+.service-list {
+  margin-top: 6px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+footer {
+  margin-top: 60px;
+  padding: 40px 20px;
+  background: #111;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+footer h4 {
+  margin-bottom: 12px;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 900px) {
+  .home main {
+    grid-template-columns: 1fr;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .offer-grid,
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* =====================================================
+   PROFIILIN LUONTI
+   ===================================================== */
+   .form-card {
+    max-width: 500px; 
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14 px;
+    padding: 24px;
+    margin-top: 20px;
+
+    }
+
+   .form-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+
+    }
+
+   .form-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    margin-bottom: 14px;
+   }
+
+   .form-input:focus {
+    outline: none;
+    border-color: #e50914;
+    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.3);
+   }
+
+   .form-errors {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.4 );
+    padding: 15 px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+   }
+
+   .form-errors ul {
+    margin: 0;
+    padding-left: 20px;
+
+    }
+
+/* =====================================================
+   OTA-YHTEYTTÄ
+   ===================================================== */
+
+   .page{
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.page h2{
+  margin-bottom: 20px;
+}
+
+.alert{
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: 15px 0;
+  font-weight: 500;
+}
+.alert--success{
+  border: 1px solid #4caf50;
+  background-color: rgba(76, 175, 80, 0.08);
+}
+
+.alert--error{
+  border: 1px solid #f44336;
+  background-color: rgba(244, 67, 54, 0.08);
+}
+.form{
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.form label{
+  font-weight: 500;
+}
+.form__input,
+.form__textarea{
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+.form__input:focus,
+.form__textarea:focus{
+  outline: none;
+  border-color: #e50914; 
+}
+.form__textarea{
+  resize: vertical;
+  min-height: 120px;
+}
+
+.divider{
+  margin: 35px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.search{
+  margin-bottom: 15px;
+}
+
+.search input{
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+.messages{
+  display: grid;
+  gap: 14px;
+  margin-top: 15px;
+}
+
+.message{
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 14px 16px;
+  background-color: #fafafa;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.message:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.message__top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+.message__top strong{
+  font-size: 1rem;
+}
+
+.message__top span{
+  opacity: 0.7;
+}
+
+.message p{
+  margin: 0;
+  line-height: 1.5;
+}
+.muted{
+  opacity: 0.6;
+  font-size: 0.9rem;
+}
+
+   
+
+
+
+/* ==========================================
+   HERO – mobiiliystävällinen asettelu
+   ========================================== */
+@media (max-width: 700px) {
+    .hero {
+        height: 400px; 
+    }
+
+    .hero-content {
+        bottom: 15px;         
+        left: 15px;           
+        right: 15px;          
+        padding: 10px 15px;   
+    }
+
+    .hero-content h2 {
+        font-size: 1.5rem;    
+    }
+
+    .hero-content p {
+        font-size: 1rem;      
+    }
+
+    .hero-content .btn {
+        padding: 0.4rem 0.8rem;  
+        font-size: 0.9rem;
+
+        }
+
+/* =====================================================
+   OTA-YHTEYTTÄ
+   ===================================================== */
+
+   .page{
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.page h2{
+  margin-bottom: 20px;
+}
+
+.alert{
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: 15px 0;
+  font-weight: 500;
+}
+.alert--success{
+  border: 1px solid #4caf50;
+  background-color: rgba(76, 175, 80, 0.08);
+}
+
+.alert--error{
+  border: 1px solid #f44336;
+  background-color: rgba(244, 67, 54, 0.08);
+}
+.form{
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.form label{
+  font-weight: 500;
+}
+.form__input,
+.form__textarea{
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+.form__input:focus,
+.form__textarea:focus{
+  outline: none;
+  border-color: #e50914; 
+}
+.form__textarea{
+  resize: vertical;
+  min-height: 120px;
+}
+
+.divider{
+  margin: 35px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.search{
+  margin-bottom: 15px;
+}
+
+.search input{
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+.messages{
+  display: grid;
+  gap: 14px;
+  margin-top: 15px;
+}
+
+.message{
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 14px 16px;
+  background-color: #fafafa;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.message:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.message__top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+.message__top strong{
+  font-size: 1rem;
+}
+
+.message__top span{
+  opacity: 0.7;
+}
+
+.message p{
+  margin: 0;
+  line-height: 1.5;
+}
+.muted{
+  opacity: 0.6;
+  font-size: 0.9rem;
+}
+
+   
+
+
+
+/* ==========================================
+   HERO – mobiiliystävällinen asettelu
+   ========================================== */
+@media (max-width: 700px) {
+    .hero {
+        height: 400px; 
+    }
+
+    .hero-content {
+        bottom: 15px;         
+        left: 15px;           
+        right: 15px;          
+        padding: 10px 15px;   
+    }
+
+    .hero-content h2 {
+        font-size: 1.5rem;    
+    }
+
+    .hero-content p {
+        font-size: 1rem;      
+    }
+
+    .hero-content .btn {
+        padding: 0.4rem 0.8rem;  
+        font-size: 0.9rem;
+
+
+
 
 
 
