@@ -154,93 +154,150 @@ header {
     HAKUTOIMINTO
     ===================================================== */
 
-   .page {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 28px 20px;
-   }
-
-   .page-title {
-    font-size: 2.2rem;
-    margin: 10px 0 18px;
-    color: #e50914; 
-   }
-
-    h1, h2, h3 {
-    color: #e50914;
-   }
+   body {
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
 
    .navbar {
     background: black;
     padding: 15px;
-   }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+   .navbar .logo {
+    font-size: 1.5rem;
+    color: #e50914;
+  }
 
    .nav-links {
     list-style: none;
     display: flex;
     gap: 15px;
-   }
+    margin: 0;
+    padding: 0;
+  }
 
    .nav-links a {
     color: white;
     text-decoration: none;
-   }
+  }
 
    .nav-links a:hover {
     color: #e50914;
-   }
+  }
 
-   .btn, button {
+   .nav-buttons .btn {
     background: #e50914;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 6px 12px;
     cursor: pointer;
-  
-   }
+    text-decoration: none;
+    margin-left: 5px;
+  }
 
-  .btn:hover, button:hover {
+   .nav-buttons .btn:hover {
     background: #b20710;
-   }
+  }
 
-   input, textarea {
-    width: 100%;
-    padding: 8px;
+   .page {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+   .page-title {
+    font-size: 2rem;
+    color: #e50914;
+    margin-bottom: 15px;
+  }
+
+   .form-card {
+    background: #1c1c1c;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+   .form-label {
+    display: block;
     margin-bottom: 10px;
-    }
+  }
+
+   .form-input {
+    width: 100%;
+    padding: 6px;
+    margin-top: 4px;
+    border-radius: 3px;
+    border: 1px solid #333;
+    background: #222;
+    color: #fff;
+  }
+
+   .btn-primary {
+    margin-top: 10px;
+    background: #e50914;
+  }
+
+   .btn-primary:hover {
+    background: #b20710;
+  }
 
    .movie {
     background: #1c1c1c;
     padding: 15px;
     margin-bottom: 15px;
     border-left: 4px solid #e50914;
-    border-radius: 4px; 
-   }
+    border-radius: 4px;
+  }
 
-   .form-card {
-    background: #1c1c1c;
-    padding: 15px;
-    margin: 20px auto;
-    max-width: 400px;
-    border-radius: 5px;
-   }
-
-   .form-label {
-    display: block;
-    margin-bottom: 10px;
-   }
-
-   .form-input {
-    width: 100%;
-    padding: 5px;
-    margin-top: 3px;
-   }
+   .movie img {
+    margin-top: 10px;
+    border-radius: 4px;
+  }
 
    footer {
     background: black;
     padding: 20px;
-    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
   }
+
+   footer section h4 {
+    color: #e50914;
+  }
+
+   footer section p, footer section a {
+    color: #fff;
+    margin: 2px 0;
+    text-decoration: none;
+  }
+
+   footer section a:hover {
+    color: #4CAF50;
+  }
+
+  /* mobiili */
+   @media (max-width: 700px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .nav-buttons {
+        flex-direction: column;
+    }
+    .page {
+        padding: 10px;
+    }
+  }
+
    /*mobiili*/
    @media (max-width: 700px) {
     .service-grid {
