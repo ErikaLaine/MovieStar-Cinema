@@ -1,6 +1,4 @@
 <?php
-require_once "db.php";
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -36,52 +34,30 @@ $hakusana = "";
 <main class="page">
     <h1 class="page-title">Hae elokuvia</h1>
 
-    <form class="form-card" method="GET" novalidate>
+    <form class="form-card" method="GET">
         <label class="form-label">
             Hakusana
-            <input class="form-input" type="text" name="hakusana" value="<?= htmlspecialchars($hakusana) ?>" placeholder="Kirjoita elokuvan nimi">
+            <input class="form-input" 
+                   type="text" 
+                   name="hakusana" 
+                   value="<?php echo isset($_GET['hakusana']) ? htmlspecialchars($_GET['hakusana']) : ''; ?>" 
+                   placeholder="Kirjoita elokuvan nimi">
         </label>
         <button class="btn btn-primary" type="submit">Hae</button>
     </form>
 
     <hr>
 
-   <?php
-if(isset($_GET['hakusana'])){
-    $hakusana = trim($_GET['hakusana']);
-    if($hakusana != ""){
-        $stmt = $conn->prepare("SELECT nimi, vuosi, genre, kuvaus, kuva FROM elokuvat WHERE nimi LIKE ?");
-        if(!$stmt){
-            die("SQL-virhe: " . $conn->error);
-        }
-        $haku = "%".$hakusana."%";
-        $stmt->bind_param("s", $haku);
-        $stmt->execute();
-        $stmt->bind_result($nimi, $vuosi, $genre, $kuvaus, $kuva);
+    <?php
+    if(isset($_GET['hakusana'])){
+        $hakusana = trim($_GET['hakusana']);
 
-        $found = false;
-        while($stmt->fetch()){
-            $found = true;
-            echo "<div class='movie'>";
-            echo "<h3>".htmlspecialchars($nimi)."</h3>";
-            echo "<p><strong>Vuosi:</strong> ".htmlspecialchars($vuosi)."</p>";
-            echo "<p><strong>Genre:</strong> ".htmlspecialchars($genre)."</p>";
-            echo "<p>".htmlspecialchars($kuvaus)."</p>";
-            if(!empty($kuva)){
-                echo "<img src='images/".htmlspecialchars($kuva)."' width='150'>";
-            }
-            echo "</div>";
+        if(!empty($hakusana)){
+            echo "<p>Elokuvaa ei löytynyt.</p>";
+        } else {
+            echo "<p>Kirjoita hakusana.</p>";
         }
-        if(!$found){
-            echo "<p>Ei hakutuloksia.</p>";
-        }
-        $stmt->close();
-    } else {
-        echo "<p>Kirjoita hakusana.</p>";
     }
-}
-?>
-    $conn->close();
     ?>
 </main>
 
