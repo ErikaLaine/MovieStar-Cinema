@@ -46,40 +46,41 @@ $hakusana = "";
 
     <hr>
 
-    <?php
-    if(isset($_GET['hakusana'])){
-        $hakusana = trim($_GET['hakusana']);
-        if($hakusana != ""){
-            $stmt = $conn->prepare("SELECT nimi, vuosi, genre, kuvaus, kuva FROM elokuvat WHERE nimi LIKE ?");
-            if(!$stmt){
-                die("SQL-virhe: " . $conn->error);
-            }
-            $haku = "%".$hakusana."%";
-            $stmt->bind_param("s", $haku);
-            $stmt->execute();
-            $stmt->bind_result($nimi, $vuosi, $genre, $kuvaus, $kuva);
-
-            $found = false;
-            while($stmt->fetch()){
-                $found = true;
-                echo "<div class='movie'>";
-                echo "<h3>".htmlspecialchars($nimi)."</h3>";
-                echo "<p><strong>Vuosi:</strong> ".htmlspecialchars($vuosi)."</p>";
-                echo "<p><strong>Genre:</strong> ".htmlspecialchars($genre)."</p>";
-                echo "<p>".htmlspecialchars($kuvaus)."</p>";
-                if(!empty($kuva)){
-                    echo "<img src='".htmlspecialchars($kuva)."' width='150'>";
-                }
-                echo "</div>";
-            }
-            if(!$found){
-                echo "<p>Ei hakutuloksia.</p>";
-            }
-            $stmt->close();
-        } else {
-            echo "<p>Kirjoita hakusana.</p>";
+   <?php
+if(isset($_GET['hakusana'])){
+    $hakusana = trim($_GET['hakusana']);
+    if($hakusana != ""){
+        $stmt = $conn->prepare("SELECT nimi, vuosi, genre, kuvaus, kuva FROM elokuvat WHERE nimi LIKE ?");
+        if(!$stmt){
+            die("SQL-virhe: " . $conn->error);
         }
+        $haku = "%".$hakusana."%";
+        $stmt->bind_param("s", $haku);
+        $stmt->execute();
+        $stmt->bind_result($nimi, $vuosi, $genre, $kuvaus, $kuva);
+
+        $found = false;
+        while($stmt->fetch()){
+            $found = true;
+            echo "<div class='movie'>";
+            echo "<h3>".htmlspecialchars($nimi)."</h3>";
+            echo "<p><strong>Vuosi:</strong> ".htmlspecialchars($vuosi)."</p>";
+            echo "<p><strong>Genre:</strong> ".htmlspecialchars($genre)."</p>";
+            echo "<p>".htmlspecialchars($kuvaus)."</p>";
+            if(!empty($kuva)){
+                echo "<img src='images/".htmlspecialchars($kuva)."' width='150'>";
+            }
+            echo "</div>";
+        }
+        if(!$found){
+            echo "<p>Ei hakutuloksia.</p>";
+        }
+        $stmt->close();
+    } else {
+        echo "<p>Kirjoita hakusana.</p>";
     }
+}
+?>
     $conn->close();
     ?>
 </main>
