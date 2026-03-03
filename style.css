@@ -214,7 +214,7 @@ header {
     padding: 15px;
     margin-bottom: 15px;
     border-left: 4px solid #e50914;
-    border-radius: 4px; /* hieman pyöristystä opiskelijatyyliin */
+    border-radius: 4px; 
    }
 
    .form-card {
