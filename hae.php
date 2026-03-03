@@ -1,76 +1,110 @@
 <?php
-// TIETOKANTAYHTEYS
-$servername = "localhost";
-$username   = "trtkm25a_12";
-$password   = "NB6NgN3X";
-$dbname     = "wp_trtkm25a_12";
+require_once "db.php";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Tarkista yhteys
-if ($conn->connect_error) {
-    die("Yhteys epäonnistui: " . $conn->connect_error);
-}
+$hakusana = "";
 ?>
 
 <!DOCTYPE html>
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
-    <title>Hae elokuvia</title>
-    <style>
-        body { font-family: Arial; margin: 40px; }
-        .movie { border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; }
-        img { max-width: 200px; display: block; margin-bottom: 10px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hae elokuvia | MovieStar Cinema</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Hae elokuvia</h1>
+<header>
+    <nav class="navbar">
+        <h1 class="logo">MovieStar Cinema<span>★</span></h1>
+        <ul class="nav-links">
+            <li><a href="index.html">Etusivu</a></li>
+            <li><a href="#">Näytösajat</a></li>
+            <li><a href="liput.html">Liput</a></li>
+            <li><a href="hae.php">Hae</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="profiili.html" class="btn">Profiili</a>
+            <a href="liput.html" class="btn">Osta liput</a>
+        </div>
+    </nav>
+</header>
 
-<form method="GET" action="">
-    <input type="text" name="hakusana" placeholder="Kirjoita elokuvan nimi..." required>
-    <button type="submit">Hae</button>
-</form>
+<main class="page">
+    <h1 class="page-title">Hae elokuvia</h1>
 
-<hr>
+    <form class="form-card" method="GET" novalidate>
+        <label class="form-label">
+            Hakusana
+            <input class="form-input" type="text" name="hakusana" value="<?= htmlspecialchars($hakusana) ?>" placeholder="Kirjoita elokuvan nimi">
+        </label>
+        <button class="btn btn-primary" type="submit">Hae</button>
+    </form>
 
-<?php
-if (isset($_GET['hakusana'])) {
+    <hr>
 
-    $hakusana = $_GET['hakusana'];
+   <?php
+if(isset($_GET['hakusana'])){
+    $hakusana = trim($_GET['hakusana']);
+    if($hakusana != ""){
+        $stmt = $conn->prepare("SELECT nimi, vuosi, genre, kuvaus, kuva FROM elokuvat WHERE nimi LIKE ?");
+        if(!$stmt){
+            die("SQL-virhe: " . $conn->error);
+        }
+        $haku = "%".$hakusana."%";
+        $stmt->bind_param("s", $haku);
+        $stmt->execute();
+        $stmt->bind_result($nimi, $vuosi, $genre, $kuvaus, $kuva);
 
-    // Prepared statement estää SQL-injektion
-    $stmt = $conn->prepare("SELECT * FROM movies WHERE title LIKE ?");
-    $searchTerm = "%" . $hakusana . "%";
-    $stmt->bind_param("s", $searchTerm);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
+        $found = false;
+        while($stmt->fetch()){
+            $found = true;
             echo "<div class='movie'>";
-            echo "<h2>" . htmlspecialchars($row['title']) . "</h2>";
-            echo "<p><strong>Vuosi:</strong> " . htmlspecialchars($row['year']) . "</p>";
-            echo "<p><strong>Genre:</strong> " . htmlspecialchars($row['genre']) . "</p>";
-            echo "<p>" . htmlspecialchars($row['description']) . "</p>";
-
-            if (!empty($row['image'])) {
-                echo "<img src='" . htmlspecialchars($row['image']) . "' alt='Elokuvan kuva'>";
+            echo "<h3>".htmlspecialchars($nimi)."</h3>";
+            echo "<p><strong>Vuosi:</strong> ".htmlspecialchars($vuosi)."</p>";
+            echo "<p><strong>Genre:</strong> ".htmlspecialchars($genre)."</p>";
+            echo "<p>".htmlspecialchars($kuvaus)."</p>";
+            if(!empty($kuva)){
+                echo "<img src='images/".htmlspecialchars($kuva)."' width='150'>";
             }
-
             echo "</div>";
         }
+        if(!$found){
+            echo "<p>Ei hakutuloksia.</p>";
+        }
+        $stmt->close();
     } else {
-        echo "<p>Ei hakutuloksia.</p>";
+        echo "<p>Kirjoita hakusana.</p>";
     }
-
-    $stmt->close();
 }
-
-$conn->close();
 ?>
+    $conn->close();
+    ?>
+</main>
+
+<footer>
+    <section>
+        <h4>Info</h4>
+        <p>Edut ja kampanjat</p>
+        <p>Ikärajat</p>
+        <p>Teatterit</p>
+        <p>Aukioloajat</p>
+    </section>
+    <section>
+        <h4>Yritys</h4>
+        <p>Tietoa meistä</p>
+        <p>Työpaikat</p>
+        <p>Yhteiskuntavastuu</p>
+    </section>
+    <section>
+        <h4>Asiakaspalvelu</h4>
+        <p>asiakaspalvelu@moviestar.fi</p>
+        <p><a href="hae.php">Hae elokuvia</a></p>
+    </section>
+</footer>
 
 </body>
 </html>
