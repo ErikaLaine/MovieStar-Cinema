@@ -1,13 +1,12 @@
 <?php
 require_once "db.php";
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $hakusana = "";
 
 if ($conn->connect_error) {
-    die("Yhteys epäonnistui: " . $conn->connect_error);
+    die("Tietokantayhteys epäonnistui: " . $conn->connect_error);
 }
 ?>
 
@@ -51,7 +50,6 @@ if ($conn->connect_error) {
         if(isset($_GET['hakusana'])){
             $hakusana = trim($_GET['hakusana']);
             if($hakusana != ""){
-                
                 $stmt = $conn->prepare("SELECT nimi, vuosi, genre, kuvaus, kuva FROM elokuvat WHERE nimi LIKE ?");
                 if(!$stmt){
                     die("SQL-virhe: " . $conn->error);
@@ -60,8 +58,8 @@ if ($conn->connect_error) {
                 $haku = "%".$hakusana."%";
                 $stmt->bind_param("s", $haku);
                 $stmt->execute();
-                
                 $stmt->bind_result($nimi, $vuosi, $genre, $kuvaus, $kuva);
+
                 $found = false;
                 while($stmt->fetch()){
                     $found = true;
