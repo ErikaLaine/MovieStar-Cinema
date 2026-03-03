@@ -1,16 +1,7 @@
 <?php
-// TIETOKANTAYHTEYS
-$servername = "localhost";
-$username   = "trtkm25a_12";
-$password   = "NB6NgN3X";
-$dbname     = "wp_trtkm25a_12";
+require_once "db.php";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Tarkista yhteys
-if ($conn->connect_error) {
-    die("Yhteys epäonnistui: " . $conn->connect_error);
-}
+$hakusana = "";
 ?>
 
 <!DOCTYPE html>
@@ -18,55 +9,62 @@ if ($conn->connect_error) {
 <head>
     <meta charset="UTF-8">
     <title>Hae elokuvia</title>
-    <style>
-        body { font-family: Arial; margin: 40px; }
-        .movie { border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; }
-        img { max-width: 200px; display: block; margin-bottom: 10px; }
-    </style>
 </head>
 <body>
 
-<h1>Hae elokuvia</h1>
+<h2>Hae elokuvia</h2>
 
-<form method="GET" action="">
-    <input type="text" name="hakusana" placeholder="Kirjoita elokuvan nimi..." required>
+<form method="GET">
+    <input type="text" name="hakusana" placeholder="Kirjoita elokuvan nimi">
     <button type="submit">Hae</button>
 </form>
 
 <hr>
 
 <?php
-if (isset($_GET['hakusana'])) {
 
-    $hakusana = $_GET['hakusana'];
+if (isset($_GET["hakusana"])) {
 
-    // Prepared statement estää SQL-injektion
-    $stmt = $conn->prepare("SELECT * FROM movies WHERE title LIKE ?");
-    $searchTerm = "%" . $hakusana . "%";
-    $stmt->bind_param("s", $searchTerm);
-    $stmt->execute();
+    $hakusana = trim($_GET["hakusana"]);
 
-    $result = $stmt->get_result();
+    if ($hakusana != "") {
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<div class='movie'>";
-            echo "<h2>" . htmlspecialchars($row['title']) . "</h2>";
-            echo "<p><strong>Vuosi:</strong> " . htmlspecialchars($row['year']) . "</p>";
-            echo "<p><strong>Genre:</strong> " . htmlspecialchars($row['genre']) . "</p>";
-            echo "<p>" . htmlspecialchars($row['description']) . "</p>";
+        $stmt = $conn->prepare("SELECT * FROM movies WHERE title LIKE ?");
+        
+        if ($stmt) {
 
-            if (!empty($row['image'])) {
-                echo "<img src='" . htmlspecialchars($row['image']) . "' alt='Elokuvan kuva'>";
+            $search = "%" . $hakusana . "%";
+            $stmt->bind_param("s", $search);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+
+                while ($row = $result->fetch_assoc()) {
+
+                    echo "<div>";
+                    echo "<h3>" . htmlspecialchars($row["title"]) . "</h3>";
+                    echo "<p>Vuosi: " . htmlspecialchars($row["year"]) . "</p>";
+                    echo "<p>Genre: " . htmlspecialchars($row["genre"]) . "</p>";
+                    echo "<p>" . htmlspecialchars($row["description"]) . "</p>";
+
+                    if (!empty($row["image"])) {
+                        echo "<img src='" . htmlspecialchars($row["image"]) . "' width='150'>";
+                    }
+
+                    echo "<hr>";
+                    echo "</div>";
+                }
+
+            } else {
+                echo "<p>Ei hakutuloksia.</p>";
             }
 
-            echo "</div>";
+            $stmt->close();
         }
     } else {
-        echo "<p>Ei hakutuloksia.</p>";
+        echo "<p>Kirjoita hakusana.</p>";
     }
-
-    $stmt->close();
 }
 
 $conn->close();
