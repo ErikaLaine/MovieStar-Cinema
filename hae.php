@@ -21,6 +21,7 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
     <nav class="navbar">
         <h1 class="logo">MovieStar Cinema<span>★</span></h1>
         <ul class="nav-links">
@@ -28,12 +29,13 @@ if ($conn->connect_error) {
             <li><a href="#">Näytösajat</a></li>
             <li><a href="liput.html">Liput</a></li>
             <li><a href="hae.php">Hae</a></li>
-        </ul>
-        <div class="nav-buttons">
+            </ul>
+            <div class="nav-buttons">
             <a href="profiili.html" class="btn">Profiili</a>
             <a href="liput.html" class="btn">Osta liput</a>
         </div>
     </nav>
+
 
     <main class="page">
         <h1 class="page-title">Hae elokuvia</h1>
@@ -41,10 +43,10 @@ if ($conn->connect_error) {
         <form class="form-card" method="GET" novalidate>
             <label class="form-label">
                 Hakusana
-                <input class="form-input" type="text" name="hakusana" value="<?= htmlspecialchars($hakusana) ?>" placeholder="Kirjoita elokuvan nimi">
+            <input class="form-input" type="text" name="hakusana" value="<?= htmlspecialchars($hakusana) ?>" placeholder="Kirjoita elokuvan nimi">
             </label>
             <button class="btn btn-primary" type="submit">Hae</button>
-        </form>
+            </form>
 
         <hr>
 
