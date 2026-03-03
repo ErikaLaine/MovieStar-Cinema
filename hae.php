@@ -1,5 +1,5 @@
 <?php
-require_once "db.php";
+require_once "db.php"; 
 
 $hakusana = "";
 ?>
@@ -9,6 +9,7 @@ $hakusana = "";
 <head>
     <meta charset="UTF-8">
     <title>Hae elokuvia</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -22,7 +23,6 @@ $hakusana = "";
 <hr>
 
 <?php
-
 if (isset($_GET["hakusana"])) {
 
     $hakusana = trim($_GET["hakusana"]);
@@ -30,9 +30,8 @@ if (isset($_GET["hakusana"])) {
     if ($hakusana != "") {
 
         $stmt = $conn->prepare("SELECT * FROM movies WHERE title LIKE ?");
-        
-        if ($stmt) {
 
+        if ($stmt) {
             $search = "%" . $hakusana . "%";
             $stmt->bind_param("s", $search);
             $stmt->execute();
@@ -42,7 +41,7 @@ if (isset($_GET["hakusana"])) {
 
                 while ($row = $result->fetch_assoc()) {
 
-                    echo "<div>";
+                    echo "<div class='movie'>";
                     echo "<h3>" . htmlspecialchars($row["title"]) . "</h3>";
                     echo "<p>Vuosi: " . htmlspecialchars($row["year"]) . "</p>";
                     echo "<p>Genre: " . htmlspecialchars($row["genre"]) . "</p>";
@@ -52,7 +51,6 @@ if (isset($_GET["hakusana"])) {
                         echo "<img src='" . htmlspecialchars($row["image"]) . "' width='150'>";
                     }
 
-                    echo "<hr>";
                     echo "</div>";
                 }
 
@@ -62,6 +60,7 @@ if (isset($_GET["hakusana"])) {
 
             $stmt->close();
         }
+
     } else {
         echo "<p>Kirjoita hakusana.</p>";
     }
