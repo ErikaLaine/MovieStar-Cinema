@@ -3,18 +3,19 @@
 require_once "db.php";
 
 
-
 $sent_nimi = "";
 $sent_viesti = "";
 
-
+// tässä käytin apuna W3Schools php forms
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $nimi = trim($_POST["nimi"] ?? "");
     $sahkoposti = trim($_POST["sahkoposti"] ?? "");
     $viesti = trim($_POST["viesti"] ?? "");
         
+        // tässä käytin apuna: W3Schools MYSQl prepared statements
         $stmt = $conn->prepare("INSERT INTO viestit (nimi, sahkoposti, viesti) VALUES (?, ?, ?)");
+        
         if ($stmt) {
             $stmt->bind_param("sss", $nimi, $sahkoposti, $viesti);
             if ($stmt->execute()) {
@@ -64,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   <?php
 
-
+// tässä käytin apuna w3school php htmlspecialchars 
   if ($sent_viesti != "") {
       echo '<div class="message">';
       echo '<strong>Lähetit tämän (' . htmlspecialchars($sent_nimi) . '):</strong>';
