@@ -438,8 +438,16 @@ footer h4 {
   border-radius: 14px;
   padding: 14px 16px;
   background-color: #fafafa;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  color: #111;
 }
+
+.message strong{
+  color: #111;            /* varmistus otsikolle */
+}
+.message p{
+  color: #111;            /* varmistus viestille */
+}
+
 .message:hover{
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
