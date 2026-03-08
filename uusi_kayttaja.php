@@ -14,11 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 }
 
-if ($nimi === "" || strlen($nimi) > 3) {
+if ($nimi === "" || strlen($nimi) <3) { //strlen -> antaa pituuden (W3 school)
     $errors[] = "Nimen pitää olla vähintään 3 merkkiä.";
 }
 
-if ($sahkoposti === "" || !filter_var($sahkoposti, FILTER_VALIDATE_EMAIL)) {
+if ($sahkoposti === "" || !filter_var($sahkoposti, FILTER_VALIDATE_EMAIL)) { //tarkistaa @, kielletyt merkit, onko sähköpostioikein / != ei
     $errors[] = "Syötä kelvollinen sähköposti";
 }
 
@@ -32,8 +32,8 @@ if ($salasana !== $varmennus) {
 
 if (empty($errors)) {
     $stmt = $conn->prepare("SELECT id FROM users WHERE sahkoposti = ?");
-    $stmt->bind_pram("s", $sahkoposti); 
-    $stmt->execute();
+    $stmt->bind_pram("s", $sahkoposti); // s tilalle säpö
+    $stmt->execute(); 
 
     $tulokset = $stmt->get_result(); //tulokset user tietokannasta
 
