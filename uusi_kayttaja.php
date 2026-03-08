@@ -7,14 +7,14 @@ $nimi = "";
 $sahkoposti = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nimi = trim($_POST["nimi"] ?? "");
-    $sahkoposti = trim($_POST["sahkoposti"] ?? "");
+    $nimi = ($_POST["nimi"] ?? "");
+    $sahkoposti = ($_POST["sahkoposti"] ?? "");
     $salasana = $_POST["salasana"] ?? "";
     $varmennus = $_POST["varmenna_salasana"] ?? "";
     
 }
 
-if ($nimi === "" || strlen($nimi) < 3) {
+if ($nimi === "" || strlen($nimi) > 3) {
     $errors[] = "Nimen pitää olla vähintään 3 merkkiä.";
 }
 
@@ -31,33 +31,38 @@ if ($salasana !== $varmennus) {
 }
 
 if (empty($errors)) {
-    $check = $conn->prepare("SELECT id FROM users WHERE sahkoposti = ?");
-    $check->bind_pram("s", $values["sahkoposti"]);
-    $check->execute();
-    $res = $check->get_result();
+    $stmt = $conn->prepare("SELECT id FROM users WHERE sahkoposti = ?");
+    $stmt->bind_pram("s", $sahkoposti); 
+    $stmt->execute();
+
+    $tulokset = $stmt->get_result(); //tulokset user tietokannasta
 
     if ($res->num_rows > 0) {
         $errors[] = "Tämä sähköposti on jo käytössä";
     }
 
-    $check->close();
+    $stmt->close();
 }
 
-if (empty($errors)) {
-    $hash = password_hash($values["salsana"], PASSWORD_DEFAULT);
-    $stmt = $conn->prepare( "INSERT INTO users (nimi, sahkoposti, salasana_hash) VALUES (?, ?, ?)");
-    $stmt->bind_pram("sss", $values["nimi"], $values["sahkoposti"], $hash);
+if (empty($errors)) { 
+    $sql = "INSERT INTO users (nimi, sahkoposti, salasana_hash) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
 
-    if ($stmt->execute()) {
-        header("Location: profiili.php?sahkoposti=" . urlencode($values["sahkoposti"]));
+    $stmt->bind_pram("sss", $nimi, $sahkoposti, $salsana); //sss tilalle nimi, säpö ja salasana 
+    $kirjautunut = $stmt->execute();
+
+    if ($kirjautunut) {
+        $sahkoposti = ($values["sahkoposti"]); 
+        header("Location: profiili.php?sahkoposti=" . $sahkoposti);
         exit;
+
     } else {
         $errors[] = "Tallennus epäonnistui" . $stmt->error;
     }
 
     $stmt->close();
 }
-
+////W3-school htmlspecialchars()-> erikoisemrkit parempaan muotoon
 ?>
 
 <!DOCTYPE html>
@@ -123,4 +128,4 @@ if (empty($errors)) {
         </form>
     </main>
 </body>
-</html>
+</html> 

@@ -1,15 +1,19 @@
 <?php
 require_once "db.php";
 
-$sahkoposti = trim($_GET["sahkoposti"] ?? "");
+$sahkoposti = $_GET[$sahkposti] ?? "";
 $user = null;
 
-if ($sahkoposti !== "") {
-    $stmt = $conn->prepare("SELECT nimi, sahkoposti, jasenyystaso, ostetut_liput, suosikkielokuva FROM users WHERE sahkoposti = ?");
-    $stmt->bind_param("s", $sahkoposti);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $user = $res->fetch_assoc();
+if (!empty($sahkoposti)) {
+    $sql = "SELECT nimi, sahkoposti, jasenyystaso, ostetut_liput, suosikkielokuva FROM users WHERE sahkoposti = ?"
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bind_param("s", $sahkoposti); //sähköposti s paikalle
+    $stmt->execute(); //hakee
+    $res = $stmt->get_result(); //"results"
+    $user = $res->fetch_assoc(); //näkyy taulukkona
+
+
     $stmt->close();
 }
 ?>
@@ -46,7 +50,7 @@ if ($sahkoposti !== "") {
 
             </div>
         </nav>
-</header>
+    </header>
 
         <main class="page">
             <h1 class="page-title">Profiili</h1>
@@ -58,15 +62,15 @@ if ($sahkoposti !== "") {
                     <a href="uusi_kayttaja.php">Luo Profiili</a>
                 </p>
             
-
             <?php else: ?>
                 <div class="profile-card">
                     <div class="profile-info">
-                        <h2><?= htmlspecialchars($user["nimi"]) ?></h2>
+                        <h2><?= htmlspecialchars($user["nimi"]) ?></h2>  //W3-school -> erikoisemrkit parempaan muotoon
                         <p>Sähköposti: <?= htmlspecialchars($user["sahkoposti"]) ?></p>
                         <p>Jäsenyystaso: <?= htmlspecialchars($user["jasenyystaso"]) ?></p>
                         <p>Ostetut liput: <?= (int)$user["ostetut_liput"] ?></p>
                         <p>Suosikkielokuva: <?= htmlspecialchars($user["suosikkielokuva"] ?? "") ?></p>
+              
     
                     </div>
                 </div>
